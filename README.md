@@ -55,7 +55,7 @@ sh ~/hyprstellar/link_config.sh
 |                               | [Departure Mono](https://www.nerdfonts.com/font-downloads)                                         |
 | Asian Font Collections        | [Adobe Source Han Sans](https://archlinux.org/packages/extra/any/adobe-source-han-sans-otc-fonts/) |
 | Emoji Font                    | [Noto Emoji](https://github.com/googlefonts/noto-emoji)                                            |
-| Emoji Selector                | [Rofi Emoji](https://github.com/Mange/rofi-emoji)                                                  | 
+| Emoji Selector                | [Rofi Emoji](https://github.com/Mange/rofi-emoji)                                                  |
 | Clipboard Manager             | [Cliphist](https://github.com/sentriz/cliphist)                                                    |
 | Colorscheme                   | [Pywal16](https://github.com/eylles/pywal16)                                                       |
 | Neovim Colorscheme            | [Rosé Pine](https://github.com/rose-pine/neovim)                                                   |
@@ -133,7 +133,7 @@ Check out my wallpaper [repository](https://github.com/xeji01/wallpapercollectio
 
 ### Librewolf
 
-![image](assets/librewolf.png)  
+![image](assets/librewolf.png)
 
 ### Rofi
 
@@ -142,7 +142,7 @@ Check out my wallpaper [repository](https://github.com/xeji01/wallpapercollectio
 | ![image](assets/rofi-apps.png)          |
 
 | Emoji                           | Wi-Fi                           |
-| ------------------------------- | ------------------------------- | 
+| ------------------------------- | ------------------------------- |
 | ![image](assets/rofi-emoji.png) | ![image](assets/rofi-wifi.png)  |
 
 | Clipboard                                            |
@@ -164,7 +164,7 @@ Check out my wallpaper [repository](https://github.com/xeji01/wallpapercollectio
 | <img src="assets/spotify-artist.png" alt="artist" width="1366"/>
 
 | Album / Playlist | Lyrics
-| --- | --- 
+| --- | ---
 | <img src="assets/spotify-album.png" alt="album" width="600"/> | <img src="assets/spotify-lyrics.png" alt="lyrics" width="600"/>
 
 ### Wlogout
@@ -197,6 +197,7 @@ Check out my wallpaper [repository](https://github.com/xeji01/wallpapercollectio
 | Key                                           | Command                              |
 | --------------------------------------------- | ------------------------------------ |
 | `Super` + `Enter`                             | Kitty                                |
+| `Super` + `H`                                  | Open Bind Cheatsheet                 |
 | `Super` + `A`                                 | Select random wallpaper              |
 | `Super` + `B`                                 | Librewolf                            |
 | `Super` + `E`                                 | LF File Manager                      |
@@ -214,7 +215,7 @@ Check out my wallpaper [repository](https://github.com/xeji01/wallpapercollectio
 | `Super` + `Shift` + `R`                       | Restart Hyprland                     |
 | `PrntScrn`                                    | Take screenshot of the entire screen |
 | `Ctrl` + `PrntScrn`                           | Take screenshot of selected area     |
-| `Ctrl` + `Shift` + `PrntScrn`                 | Take screenshot of selected window   | 
+| `Ctrl` + `Shift` + `PrntScrn`                 | Take screenshot of selected window   |
 | `Ctrl` + `Super` + `Arrow down/up/left/right` | Resize window                        |
 
 Other hotkeys can be found here `~/.config/hypr/configs/binds.conf`
