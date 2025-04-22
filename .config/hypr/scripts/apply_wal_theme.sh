@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export PATH="$PATH:/home/scriptwiz/.local/bin"
+
 THEME_FILE="/tmp/theme_variant"
 wal_arguments=""
 
@@ -9,7 +11,7 @@ if [ -s "$THEME_FILE" ]; then
   esac
 fi
 
-wal -i ~/wallpaper/wallpaper.png --cols16 $wal_arguments -q -n -e
+wal -i ~/wallpaper/wallpaper.png $wal_arguments --vte -e
 
 if pgrep -x "waybar" >/dev/null; then
     killall waybar

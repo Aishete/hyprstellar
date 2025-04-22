@@ -27,6 +27,5 @@ if [ -n "$selected_image_path" ]; then
   fi
 
   notify-send -a "Wallpaper selector" "Wallpaper changed" "$selected_image_path" -i ~/wallpaper/wallpaper.png
-  . ~/.config/hypr/scripts/apply_wal_theme.sh
+  sh ~/.config/hypr/scripts/apply_wal_theme.sh
 fi
-

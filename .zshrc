@@ -90,3 +90,5 @@ spf() {
 
 
 export PATH=$PATH:/home/scriptwiz/.spicetify
+export PATH="$PATH:/home/scriptwiz/.local/bin"
+
