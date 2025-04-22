@@ -24,27 +24,54 @@ mapfile -t BINDS < <(grep '^bind' "$HYPR_CONF" | \
         }
 
         # Format the output with more spaces
-        print "<b>" key "</b>    <i>" $2 "</i>    <span color='\''white'\''>" comment "</span>    <span color='\''gray'\''>" cmd "</span>"
+        print key "    " $2 "    |    " comment
     }')
 
 # Add static binds that might not be in the config file
 EXTRA_BINDS=(
-    "<b>SUPER+MouseDrag</b>    <i>movewindow</i>    <span color='gray'>Drag to move window</span>    <span color='blue'>Move window with left mouse button</span>"
-    "<b>SUPER+RightMouseDrag</b>    <i>resizewindow</i>    <span color='gray'>Drag to resize window</span>    <span color='blue'>Resize window with right mouse button</span>"
+    "SUPER+MouseDrag | Move window with left mouse button"
+    "SUPER+RightMouseDrag | Resize window with right mouse button"
 )
 
 # Combine all binds
 ALL_BINDS=("${BINDS[@]}" "${EXTRA_BINDS[@]}")
 
 # Show in rofi with increased width
-CHOICE=$(printf '%s\n' "${ALL_BINDS[@]}" | rofi -dmenu -i -markup-rows -p "Hyprland Keybinds:" -width 80% -location 0)
+while true; do
+    result=$(
+        rofi -dmenu \
+        -kb-custom-1 "Control-Delete" \
+        -kb-custom-2 "Alt-Delete" \
+        -config ~/.config/rofi/keybinds.rasi < <(printf '%s\n' "${ALL_BINDS[@]}")
+    )
 
-# Extract and execute command if needed
-if [[ -n "$CHOICE" ]]; then
-    CMD=$(echo "$CHOICE" | sed -n 's/.*<span color='\''gray'\''>\(.*\)<\/span>.*/\1/p')
-    if [[ "$CMD" == exec* ]]; then
-        eval "$CMD"
-    elif [[ -n "$CMD" ]]; then
-        hyprctl dispatch "$CMD"
-    fi
-fi
+    case "$?" in
+        1)
+            exit
+            ;;
+        0)
+            case "$result" in
+                "")
+                    continue
+                    ;;
+                *)
+                    KEY=$(echo "$result" | awk -F' | ' '{print $1}')
+                    COMMAND=$(grep -E "^bind *= *$mod, $KEY," "$HYPR_CONF" | awk -F'#' '{print $1}' | sed -e 's/^bind *= *//' -e 's/, exec, //')
+
+                    if [[ "$COMMAND" == exec* ]]; then
+                        eval "$COMMAND"
+                    elif [[ -n "$COMMAND" ]]; then
+                        hyprctl dispatch "$COMMAND"
+                    fi
+                    exit
+                    ;;
+            esac
+            ;;
+        10)
+            # Handle custom action 1 (e.g., delete entry)
+            ;;
+        11)
+            # Handle custom action 2 (e.g., wipe all)
+            ;;
+    esac
+done
