@@ -145,9 +145,9 @@ Check out my wallpaper [repository](https://github.com/xeji01/wallpapercollectio
 | ------------------------------- | ------------------------------- |
 | ![image](assets/rofi-emoji.png) | ![image](assets/rofi-wifi.png)  |
 
-| Cheatsheet                           |
-| ------------------------------------ |
-| ![image](assets/rofi-Cheatsheet.png) |
+| Cheatsheet                                           |
+| ---------------------------------------------------- |
+| ![image](assets/rofi-Cheatsheet.png)                 |
 
 | Clipboard                                            |
 | ---------------------------------------------------- |
@@ -201,7 +201,7 @@ Check out my wallpaper [repository](https://github.com/xeji01/wallpapercollectio
 | Key                                           | Command                              |
 | --------------------------------------------- | ------------------------------------ |
 | `Super` + `Enter`                             | Kitty                                |
-| `Super` + `H`                                  | Open Bind Cheatsheet                 |
+| `Super` + `H`                                 | Open Bind Cheatsheet                 |
 | `Super` + `A`                                 | Select random wallpaper              |
 | `Super` + `B`                                 | Librewolf                            |
 | `Super` + `E`                                 | LF File Manager                      |
@@ -233,7 +233,14 @@ Other hotkeys can be found here `~/.config/hypr/configs/binds.conf`
 - [x] custom userChrome CSS
 - [ ] add more Utility to waybar
 - [ ] Install script
+
 ## Credits
+
+This configuration is based on the [Hyprstellar dotfiles](https://github.com/xeji01/hyprstellar) created by [xeji01](https://github.com/xeji01). I have added my personal settings and customizations to tailor the configuration to my preferences.
+
+Special thanks to [xeji01](https://github.com/xeji01) for providing an excellent starting point for my Hyprland setup.
+
 - [JaKooLit](https://github.com/JaKooLit) for volume and brightness scripts.
 - [vernette](https://github.com/vernette) for wallpaper selector script.
 - [adi1090x](https://github.com/adi1090x) for rofi inspiration.
+- [jason9075](https://github.com/jason9075) for cheatsheet code inspiration.
