@@ -15,8 +15,10 @@ _featuring [COMFY LF](https://github.com/xeji01/hyprstellar/tree/main/.config/lf
 </p>
 
 </div>
-
 > [!NOTE]
+
+> - ⚠️ 🚨 The install script is available but has not been fully tested yet - use with caution. ⚠️
+
 > - You might need to adjust some parts for your particular system, make sure to back up your configs first.
 > - This setup requires [Pywal16](https://github.com/eylles/pywal16) (for the colorschemes) to work properly.
 > - Feel free to leave this repo a star 🌟.
