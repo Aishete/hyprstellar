@@ -147,7 +147,7 @@ Check out my wallpaper [repository](https://github.com/xeji01/wallpapercollectio
 
 | Cheatsheet                                           |
 | ---------------------------------------------------- |
-| ![image](assets/rofi-Cheatsheet.png)                 |
+| ![image](assets/rofi_Cheatsheet.png)                 |
 
 | Clipboard                                            |
 | ---------------------------------------------------- |
