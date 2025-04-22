@@ -145,6 +145,10 @@ Check out my wallpaper [repository](https://github.com/xeji01/wallpapercollectio
 | ------------------------------- | ------------------------------- |
 | ![image](assets/rofi-emoji.png) | ![image](assets/rofi-wifi.png)  |
 
+| Cheatsheet                           |
+| ------------------------------------ |
+| ![image](assets/rofi-Cheatsheet.png) |
+
 | Clipboard                                            |
 | ---------------------------------------------------- |
 | ![image](assets/rofi-clipboard.png)                  |
