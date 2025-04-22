@@ -1,3 +1,5 @@
 source ~/.config/lf/configs/commands
 source ~/.config/lf/configs/keymaps
 source ~/.config/lf/configs/options
+set previewer ~/.config/lf/previewer/previewer.sh
+set cleaner ~/.config/lf/previewer/clear_img.sh

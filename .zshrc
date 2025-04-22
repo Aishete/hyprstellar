@@ -61,3 +61,32 @@ source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.config/zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+
+# editor
+
+export EDITOR="nvim"
+
+
+spf() {
+    os=$(uname -s)
+
+    # Linux
+    if [[ "$os" == "Linux" ]]; then
+        export SPF_LAST_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/superfile/lastdir"
+    fi
+
+    # macOS
+    if [[ "$os" == "Darwin" ]]; then
+        export SPF_LAST_DIR="$HOME/Library/Application Support/superfile/lastdir"
+    fi
+
+    command spf "$@"
+
+    [ ! -f "$SPF_LAST_DIR" ] || {
+        . "$SPF_LAST_DIR"
+        rm -f -- "$SPF_LAST_DIR" > /dev/null
+    }
+}
+
+
+export PATH=$PATH:/home/scriptwiz/.spicetify

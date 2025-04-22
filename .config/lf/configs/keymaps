@@ -5,7 +5,7 @@
 map c 
 map r
 map v
-
+map e &nvim-qt %f%
 
 # MODIFIED KEYS
 map . set hidden!

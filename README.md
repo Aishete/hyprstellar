@@ -21,10 +21,18 @@ _featuring [COMFY LF](https://github.com/xeji01/hyprstellar/tree/main/.config/lf
 > - This setup requires [Pywal16](https://github.com/eylles/pywal16) (for the colorschemes) to work properly.
 > - Feel free to leave this repo a star 🌟.
 
+- [Create symbolic link to .config](#create-sysmbolic-links-to-.config)
 - [Software Used](#software-used)
 - [Screenshots](#screenshots)
 - [Hotkeys](#hotkeys)
 - [To Do](#to-do)
+
+## Create symbolic links to .config
+link file from /user/hyprstellar to .config
+
+```bash
+sh ~/hyprstellar/link_config.sh
+```
 
 ## Software Used
 
@@ -218,7 +226,8 @@ Other hotkeys can be found here `~/.config/hypr/configs/binds.conf`
 - [x] custom waybar
 - [x] custom rofi
 - [x] custom userChrome CSS
-
+- [ ] add more Utility to waybar
+- [ ] Install script
 ## Credits
 - [JaKooLit](https://github.com/JaKooLit) for volume and brightness scripts.
 - [vernette](https://github.com/vernette) for wallpaper selector script.
