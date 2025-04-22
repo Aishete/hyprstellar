@@ -4,16 +4,16 @@
     "on-click": "activate",
     "all-outputs": true,
     "format-icons": {
-      "workspace-1": "∀ ", // Workspace 1
-      "workspace-2": "∃ ", // Workspace 2
-      "workspace-3": "∂ ", // Workspace 3
-      "workspace-4": "∇ ", // Workspace 4
-      "workspace-5": "∆ ", // Workspace 5
-      "workspace-6": "∫ ", // Workspace 6
-      "workspace-7": "∑ ", // Workspace 7
-      "workspace-8": "∏ ", // Workspace 8
-      "workspace-9": "√ ", // Workspace 9
-      "workspace-10": "∞ " // Workspace 10
+      "workspace-1": "∀ ",
+      "workspace-2": "∃ ",
+      "workspace-3": "∂ ",
+      "workspace-4": "∇ ",
+      "workspace-5": "∆ ",
+      "workspace-6": "∫ ",
+      "workspace-7": "∑ ",
+      "workspace-8": "∏ ",
+      "workspace-9": "√ ",
+      "workspace-10": "∞ "
     }
   },
   "clock": {
@@ -27,6 +27,12 @@
       }
     }
   },
+  "custom/recording": {
+    "exec": "~/.config/hypr/scripts/recording_status.sh",
+    "return-type": "json",
+    "interval": 1,
+    "on-click": "bash ~/.config/hypr/scripts/recorder.sh"
+  },
   "battery": {
     "states": {
       "good": 95,
@@ -34,8 +40,6 @@
       "critical": 20
     },
     "format": "{icon}   {capacity}",
-    //"format-charging": "   {capacity}",
-    //"format-plugged": "    {capacity}",
     "format-charging": "󰋠   {capacity}",
     "format-plugged": "󰋠    {capacity}",
     "format-alt": "{time}   {icon}",
@@ -53,8 +57,6 @@
       "󰛞 󰋑 󰋑 󰋑 ",
       "󰋑 󰋑 󰋑 󰋑 "
     ]
-    // "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
-    // "format-icons": [" ", " ", " ", " ", " "]
   },
   "network": {
     "format-wifi": "    {signalStrength}%",
