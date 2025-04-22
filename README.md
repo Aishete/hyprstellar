@@ -9,9 +9,9 @@ _featuring [COMFY LF](https://github.com/xeji01/hyprstellar/tree/main/.config/lf
 ![image](assets/header.png)
 
 <p align="center">
-  <img src="https://img.shields.io/github/last-commit/xeji01/hyprstellar">
-  <img src="https://img.shields.io/github/stars/xeji01/hyprstellar?style=flat">
-  <img src="https://img.shields.io/github/repo-size/xeji01/hyprstellar">
+  <img src="https://img.shields.io/github/last-commit/Aishete/hyprstellar">
+  <img src="https://img.shields.io/github/stars/Aishete/hyprstellar?style=flat">
+  <img src="https://img.shields.io/github/repo-size/Aishete/hyprstellar">
 </p>
 
 </div>
