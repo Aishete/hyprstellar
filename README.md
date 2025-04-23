@@ -140,7 +140,7 @@ Check out my wallpaper [repository](https://github.com/xeji01/wallpapercollectio
 
 | Launcher                                |
 | --------------------------------------- |
-| ![image](assets/rofi-apps.png)          |
+| ![image](assets/rofi-apps1.png)          |
 
 | Emoji                           | Wi-Fi                           |
 | ------------------------------- | ------------------------------- |
