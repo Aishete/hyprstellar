@@ -10,7 +10,8 @@
     "~/.config/waybar/modules.jsonc"
   ],
   "modules-left": [
-    "clock"
+    "clock",
+    "custom/lang"
   ],
   "modules-center": [
     "hyprland/workspaces"

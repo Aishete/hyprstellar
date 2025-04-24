@@ -42,5 +42,5 @@ previous_power_status=""
 # Run the check in an infinite loop
 while true; do
     check_battery_status
-    sleep 60  # Check every minute
+    sleep 30  # Check every minute
 done

@@ -73,6 +73,7 @@ install_official_packages() {
         "hyprshot"
         "wf-recorder"
         "mpv"
+        "socat"
     )
 
     print_status "Installing packages from official repositories..." "$YELLOW"

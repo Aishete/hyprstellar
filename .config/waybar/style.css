@@ -78,10 +78,11 @@ tooltip label {
 #clock,
 #battery,
 #network,
-#custom-recording,
 #memory,
 #bluetooth,
-#workspaces {
+#workspaces,
+#custom-recording,
+#custom_lang {
   padding: 0px 14px 0px 14px;
 }
 
@@ -94,6 +95,37 @@ tooltip label {
 }
 
 #clock {
+  color: lighter(@main-color);
+  background: transparent;
+}
+
+
+
+#network {
+  color: lighter(@main-color);
+  background: transparent;
+}
+
+#bluetooth {
+  color: lighter(@main-color);
+  background: transparent;
+}
+
+#battery {
+  color: lighter(@main-color);
+  background: transparent;
+}
+
+#memory {
+  color: lighter(@main-color);
+  background: transparent;
+}
+
+#calendar {
+  font-family: "Ndot55,DepartureMono Nerd Font";
+}
+
+#custom-lang {
   color: lighter(@main-color);
   background: transparent;
 }
@@ -130,29 +162,4 @@ tooltip label {
   100% {
     opacity: 1;
   }
-}
-
-
-#network {
-  color: lighter(@main-color);
-  background: transparent;
-}
-
-#bluetooth {
-  color: lighter(@main-color);
-  background: transparent;
-}
-
-#battery {
-  color: lighter(@main-color);
-  background: transparent;
-}
-
-#memory {
-  color: lighter(@main-color);
-  background: transparent;
-}
-
-#calendar {
-  font-family: "Ndot55,DepartureMono Nerd Font";
 }

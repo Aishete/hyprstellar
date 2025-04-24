@@ -33,6 +33,15 @@
     "interval": 1,
     "on-click": "bash ~/.config/hypr/scripts/recorder.sh"
   },
+  "custom/lang": {
+    "exec-if": "which hyprctl",
+    "exec": "~/.config/hypr/scripts/lang_notify.sh",
+    "return-type": "json",
+    "on-click": "~/.config/hypr/scripts/lang_notify.sh --switch",
+    "format": "󰌌 {}",
+    "restart-interval": 5,
+    "signal": 1
+  },
   "battery": {
     "states": {
       "good": 95,
