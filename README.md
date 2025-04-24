@@ -201,7 +201,7 @@ Check out my wallpaper [repository](https://github.com/xeji01/wallpapercollectio
 | --------------------------------------------- | ------------------------------------ |
 | `Super` + `Enter`                             | Kitty                                |
 | `Super` + `H`                                 | Open Bind Cheatsheet                 |
-| `Super` + `SHIFT`                             | Open Keyboard Cheatsheet             |
+| `Super` + `SHIFT` + `SPACE`                   | Open Keyboard Cheatsheet             |
 | `CTRL`  + `SPACE`                             | Change Keyboard Layout               |
 | `Super` + `A`                                 | Select random wallpaper              |
 | `Super` + `B`                                 | Librewolf                            |
