@@ -26,6 +26,7 @@ _featuring [COMFY LF](https://github.com/xeji01/hyprstellar/tree/main/.config/lf
 - [Software Used](#software-used)
 - [Screenshots](#screenshots)
 - [Hotkeys](#hotkeys)
+- [CheatSheet](#cheatsheet)
 - [To Do](#to-do)
 
 ## Create symbolic links to .config
@@ -146,9 +147,7 @@ Check out my wallpaper [repository](https://github.com/xeji01/wallpapercollectio
 | ------------------------------- | ------------------------------- |
 | ![image](assets/rofi-emoji.png) | ![image](assets/rofi-wifi.png)  |
 
-| Cheatsheet                                           |
-| ---------------------------------------------------- |
-| ![image](assets/rofi_Cheatsheet.png)                 |
+
 
 | Clipboard                                            |
 | ---------------------------------------------------- |
@@ -185,7 +184,6 @@ Check out my wallpaper [repository](https://github.com/xeji01/wallpapercollectio
 | Control Center |
 | --- |
 | <img src="assets/swaync.png" alt="swaync" width="300"/> |
-
 
 | Notification Pop-Up |
 | --- |
@@ -224,6 +222,23 @@ Check out my wallpaper [repository](https://github.com/xeji01/wallpapercollectio
 | `Ctrl` + `Super` + `Arrow down/up/left/right` | Resize window                        |
 
 Other hotkeys can be found here `~/.config/hypr/configs/binds.conf`
+
+## CheatSheet
+
+Auto-generated Bind cheatsheet base on `~/.config/hypr/config/binds.conf`
+
+| Cheatsheet                                           |
+| ---------------------------------------------------- |
+| ![image](assets/rofi_Cheatsheet.png)                 |
+
+rofi select layout cheatsheet
+ - 1, Khmer layout
+ - 2, English layout
+
+| Cheatsheet                                           |
+| ---------------------------------------------------- |
+| ![image](assets/layout-Cheatsheet.png)               |
+> Khmer NiDA Standard keyboard
 
 ## To Do
 - [x] switch from yazi to lf
