@@ -201,6 +201,8 @@ Check out my wallpaper [repository](https://github.com/xeji01/wallpapercollectio
 | --------------------------------------------- | ------------------------------------ |
 | `Super` + `Enter`                             | Kitty                                |
 | `Super` + `H`                                 | Open Bind Cheatsheet                 |
+| `Super` + `SHIFT`                             | Open Keyboard Cheatsheet             |
+| `CTRL`  + `SPACE`                             | Change Keyboard Layout               |
 | `Super` + `A`                                 | Select random wallpaper              |
 | `Super` + `B`                                 | Librewolf                            |
 | `Super` + `E`                                 | LF File Manager                      |
@@ -227,7 +229,7 @@ Other hotkeys can be found here `~/.config/hypr/configs/binds.conf`
 
 Auto-generated Bind cheatsheet base on `~/.config/hypr/config/binds.conf`
 
-| Cheatsheet                                           |
+| Keybind Cheatsheet                                   |
 | ---------------------------------------------------- |
 | ![image](assets/rofi_Cheatsheet.png)                 |
 
@@ -235,7 +237,7 @@ rofi select layout cheatsheet
  - 1, Khmer layout
  - 2, English layout
 
-| Cheatsheet                                           |
+|Layout Cheatsheet                                     |
 | ---------------------------------------------------- |
 | ![image](assets/layout-cheatsheet.png)               |
 > Khmer NiDA Standard keyboard
