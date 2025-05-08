@@ -74,6 +74,7 @@ install_official_packages() {
         "wf-recorder"
         "mpv"
         "socat"
+        "bc"
     )
 
     print_status "Installing packages from official repositories..." "$YELLOW"

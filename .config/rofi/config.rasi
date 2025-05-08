@@ -70,7 +70,7 @@ entry {
     expand:                      true;
     padding:                     210px 65px;
     border-radius:               3px;
-    background-color:            @background;
+    background-color:            @background-alt;
     cursor:                      text;
     placeholder:                 "TYPE TO SEARCH";
     placeholder-color:           #FFFFFF;

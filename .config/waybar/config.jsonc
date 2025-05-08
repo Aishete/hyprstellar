@@ -11,7 +11,8 @@
   ],
   "modules-left": [
     "clock",
-    "custom/lang"
+    "custom/lang",
+    "power-profiles-daemon"
   ],
   "modules-center": [
     "hyprland/workspaces"
