@@ -1,6 +1,15 @@
 # Terminal Art
 fastfetch
 
+# PATH
+export PATH=$PATH:$HOME/.spicetify
+export PATH="$PATH:$HOME/.local/bin"
+export PATH=$PATH:$HOME/.cargo/bin
+export TERM=xterm-kitty
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
+#
 
 # Load Completions
 
@@ -88,11 +97,45 @@ spf() {
     }
 }
 
-# PATH
-export PATH=$PATH:$HOME/.spicetify
-export PATH="$PATH:$HOME/.local/bin"
-export PATH=$PATH:$HOME/.cargo/bin
-
+# Lazy load nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+nvm() {
+  # Unset the nvm function to prevent re-running this logic
+  unset -f nvm
+  # Load nvm
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  # Load bash completion
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+  # Call nvm with the provided arguments
+  nvm "$@"
+}
+
+# Lazy load other node-related commands
+node() {
+  unset -f node
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+  node "$@"
+}
+
+npm() {
+  unset -f npm
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+  npm "$@"
+}
+
+# Add more commands if needed (e.g., yarn, npx)
+yarn() {
+  unset -f yarn
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+  yarn "$@"
+}
+
+npx() {
+  unset -f npx
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+  npx "$@"
+}

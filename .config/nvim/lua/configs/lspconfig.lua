@@ -16,6 +16,7 @@ lspconfig.ts_ls.setup(vim.tbl_extend("force", setup_arg, {
     init_options = {
         maxTsServerMemory = 4096,
     },
+    format_on_save = false,
 }))
 
 -- C/C++ (clangd)

@@ -147,6 +147,39 @@ update_blur() {
     reload_kitty
 }
 
+
+
+switch_en_font() {
+    local current_font=$(grep "^font_family" "$KITTY_CONF" | awk '{$1=""; print $0}' | xargs)
+    local font_list=("Typestar OCR" "KirschPropo Nerd Font Mono")
+    local font_size_list=('12' '18')
+    local index=0
+    local length_list=${#font_list[@]}
+
+    # Loop through the font list to find the current font
+    for i in "${!font_list[@]}"; do
+        if [[ "${font_list[i]}" == "$current_font" ]]; then
+            index=$i
+            break
+        fi
+    done
+
+    index=$(( (index + 1) % length_list ))
+
+    sed "s/^font_family .*$/font_family ${font_list[index]}  /" "$KITTY_CONF" > "$TEMP_FILE"
+    mv "$TEMP_FILE" "$KITTY_CONF"
+
+    sed "s/^font_size .*$/font_size ${font_size_list[index]} /" "$KITTY_CONF" > "$TEMP_FILE"
+    mv "$TEMP_FILE" "$KITTY_CONF"
+
+    # Send notification with the new font name
+    notify-send -e -h string:x-canonical-private-synchronous:kitty_control \
+                   -u low -i "utilities-terminal" \
+                   "Font Changed" "${font_list[index]}"
+    # Reload kitty config
+    reload_kitty
+}
+
 # Check if kitty config exists
 if [ ! -f "$KITTY_CONF" ]; then
     notify-send "Kitty Control Error" "Config file not found at $KITTY_CONF"
@@ -155,6 +188,10 @@ fi
 
 # Process command line argument
 case "$1" in
+    "switch_en_font")
+        current_font=$(grep "^font_family" "$KITTY_CONF" | awk '{print $2}')
+        switch_en_font
+        ;;
     "opacity-increase")
         current_opacity=$(grep "^background_opacity" "$KITTY_CONF" | awk '{print $2}')
         # Use bc for arithmetic with decimal numbers
@@ -192,6 +229,7 @@ case "$1" in
     *)
         echo "Usage: $0 [option]"
         echo "Options:"
+        echo "  switch_en_font    - Switch between font"
         echo "  opacity-increase  - Increase opacity by 0.1"
         echo "  opacity-decrease  - Decrease opacity by 0.1"
         echo "  blur-increase     - Increase blur by 1"
