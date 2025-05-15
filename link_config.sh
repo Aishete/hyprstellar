@@ -45,6 +45,8 @@ SOURCE_DIRS=(
     "$HYPRSTELLAR_DIR/.config/lsd"
     "$HYPRSTELLAR_DIR/.config/rofi"
     "$HYPRSTELLAR_DIR/.config/waybar"
+    "$HYPRSTELLAR_DIR/.config/ghostty"
+    "$HYPRSTELLAR_DIR/.config/tmux"
 )
 
 # Create symlinks in ~/.config
