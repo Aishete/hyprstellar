@@ -8,8 +8,8 @@ mouse-hide-while-typing = true
 focus-follows-mouse = true
 cursor-color = #FF0000
 
-window-padding-x = 8
-window-padding-y = 16
+#window-padding-x = 8
+#window-padding-y = 16
 window-padding-color = extend
 window-inherit-working-directory = true
 window-theme = ghostty
@@ -26,7 +26,6 @@ keybind = super+k=clear_screen
 custom-shader-animation = true
 custom-shader = ~/.config/ghostty/shaders/bettercrt.glsl
 custom-shader = ~/.config/ghostty/shaders/underwater.glsl
-custom-shader = ~/.config/ghostty/shaders/bloom.glsl
 
 
 

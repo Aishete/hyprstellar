@@ -169,7 +169,16 @@ vim.o.confirm = true
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 -- set Key bind for :Ex
-vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
+vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = 'open filesystem' })
+
+-- set key bind for open neotree
+vim.keymap.set('n', '<leader>pe', vim.cmd.Neotree, { desc = 'open filesystem' })
+
+-- set kinbind to close
+vim.keymap.set('n', '<leader>qq', vim.cmd.q, { desc = 'close buffer' })
+
+-- set keybind to exit edit mode
+vim.keymap.set('i', 'jk', '<Esc>', { desc = 'Exit insert mode' })
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
@@ -181,7 +190,8 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
---
+vim.keymap.set('n', '<leader>h', vim.cmd.terminal)
+
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
