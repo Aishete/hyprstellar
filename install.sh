@@ -57,6 +57,7 @@ install_official_packages() {
         "starship"
         "zed"
         "zen-browser"
+	"qutebrowser"
 
         # Fonts
         "adobe-source-han-sans-otc-fonts"
@@ -75,6 +76,7 @@ install_official_packages() {
         "mpv"
         "socat"
         "bc"
+	"uutils-coreutils"
     )
 
     print_status "Installing packages from official repositories..." "$YELLOW"

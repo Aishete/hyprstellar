@@ -89,7 +89,7 @@ sh ~/hyprstellar/link_config.sh
 
 | Type                  | Name                                                                                          |
 | --------------------- | --------------------------------------------------------------------------------------------- |
-| Browser               | [Librewolf](https://librewolf.net/)                                                           |
+| Browser               | [qute browser](https://qutebrowser.org/)                                                           |
 | Browser CSS           | [Fuji Fox](https://github.com/xeji01/fujifox) on my repo.                                     |
 | Librewolf Pywal Theme | [Pywalfox](https://addons.mozilla.org/ru/firefox/addon/pywalfox/)                             |
 
