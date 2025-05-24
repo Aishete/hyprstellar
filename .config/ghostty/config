@@ -25,7 +25,7 @@ keybind = ctrl+shift+k=clear_screen
 keybind = super+k=clear_screen
 custom-shader-animation = true
 custom-shader = ~/.config/ghostty/shaders/bettercrt.glsl
-custom-shader = ~/.config/ghostty/shaders/underwater.glsl
+#custom-shader = ~/.config/ghostty/shaders/underwater.glsl
 
 
 
