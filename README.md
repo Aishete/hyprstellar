@@ -43,6 +43,7 @@ sh ~/hyprstellar/link_config.sh
 | Type               | Name                                                |
 | ------------------ | --------------------------------------------------- |
 | OS                 | [Arch Linux](https://archlinux.org/)                |
+|                    | [EndeavourOS](https://endeavouros.com/)             |
 | Window Compositor  | [Hyprland](https://hyprland.org/)                   |
 | Bar                | [Waybar](https://github.com/Alexays/Waybar)         |
 | Terminal           | [Kitty](https://github.com/kovidgoyal/kitty)        |

@@ -73,7 +73,6 @@ source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # editor
 
-export EDITOR="nvim"
 
 
 spf() {
@@ -139,3 +138,10 @@ npx() {
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
   npx "$@"
 }
+
+# bun completions
+[ -s "/home/scriptwiz/.bun/_bun" ] && source "/home/scriptwiz/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
