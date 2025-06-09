@@ -1,0 +1,80 @@
+(include "eww_vars.yuck")
+
+(defwidget daybox []
+  (box :height "100" :width "100" :halign "center" :valign "center" :class "container"
+    (label :class "label"  :text DAY)
+  )
+)
+
+(defwidget monthbox []
+  (box :height "100" :width "100" :halign "center" :valign "center" :class "container"
+    (label :class "label"  :text MONTH)
+  )
+)
+
+(defwidget yearbox []
+  (box :height "100" :width "100" :halign "center" :valign "center" :class "container"
+    (label :class "label"  :text YEAR)
+  )
+)
+
+(defwidget userinfobox []
+  (centerbox :height "100" :width "340" :halign "center" :valign "center" :class "userinfo-parent"
+    (box :height "100" :width "113" :halign "center" :valign "center" :class "userinfo-child"
+      (button :onclick "kitty & disown" :class "button"
+        (label :class "icon-label"  :text "⌘")
+      )
+    )
+    (box :height "100" :width "113" :halign "center" :valign "center" :class "userinfo-child"
+      (button :onclick "GTK_THEME=diinki-retro-dark nautilus & disown"  :class "button"
+        (label :class "icon-label"  :text "🗀")
+      )
+    )
+    (box :height "100" :width "113" :halign "center" :valign "center" :class "userinfo-child"
+      (button :onclick "eww open powermenu" :class "button"
+        (label :class "icon-label"  :text "⭘")
+      )
+    )
+  )
+)
+
+(defwidget powermenu []
+  (centerbox :height "100" :width "340" :halign "center" :valign "center" :class "userinfo-parent"
+    (box :height "100" :width "113" :halign "center" :valign "center" :class "userinfo-child"
+      (button :onclick "systemctl poweroff" :class "poweroff-button"
+        (label :class "icon-label"  :text "⏻")
+      )
+    )
+    (box :height "100" :width "113" :halign "center" :valign "center" :class "userinfo-child"
+      (button :onclick "systemctl suspend"  :class "suspend-button"
+        (label :class "icon-label"  :text "⏾")
+      )
+    )
+    (box :height "100" :width "113" :halign "center" :valign "center" :class "userinfo-child"
+      (button :onclick "eww close powermenu" :class "button"
+        (label :class "icon-label"  :text "⨯")
+      )
+    )
+  )
+)
+
+(defwidget weatherbox []
+  (box :height "100" :width "340" :halign "center" :valign "center" :class "userinfo-parent"
+    (box :orientation "vertical" :space-evenly false
+      (box :orientation "horizontal" :space-evenly true
+        (label :class "icon-label" :text {WEATHER_ICON} :style "font-size: 32px;")
+        (box :orientation "vertical"
+          (label :class "label" :text {WEATHER_TEMP} :style "font-size: 18px;")
+          (label :class "label" :text {WEATHER_CONDITION} :style "font-size: 14px;")
+        )
+      )
+      (box :orientation "horizontal" :space-evenly true :style "margin-top: 10px;"
+        (label :class "label" :text {WEATHER_WIND} :style "font-size: 14px;")
+        (label :class "label" :text "|" :style "font-size: 14px;")
+        (label :class "label" :text {WEATHER_HUMIDITY} :style "font-size: 14px;")
+        (label :class "label" :text "|" :style "font-size: 14px;")
+        (label :class "label" :text {WEATHER_PRECIP} :style "font-size: 14px;")
+      )
+    )
+  )
+)

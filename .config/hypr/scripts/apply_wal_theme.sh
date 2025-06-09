@@ -19,5 +19,6 @@ fi
 
 waybar &
 
+sh ~/.config/eww/scripts/start.sh
 swaync-client -rs
 pywalfox update

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGE_DIR="$HOME/wallpaper"
+IMAGE_DIR="$HOME/wallpaper/wallpapercollections/01/"
 CURRENT_IMAGE="$HOME/wallpaper/wallpaper.png"
 APP_NAME="Wallpaper selector"
 SET_WALLPAPER_SCRIPT="$HOME/.config/hypr/scripts/set_wallpaper.sh"

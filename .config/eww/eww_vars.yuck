@@ -1,0 +1,12 @@
+; sup cuh
+
+(defpoll DAY :interval "1s" '~/.config/eww/scripts/day_format.sh')
+(defpoll MONTH :interval "1s" '~/.config/eww/scripts/month_format.sh')
+(defpoll YEAR :interval "1s" '~/.config/eww/scripts/year_format.sh')
+
+(defpoll WEATHER_ICON :interval "30m" "curl -s 'wttr.in/Phnom_Penh?format=%c&m'")
+(defpoll WEATHER_TEMP :interval "30m" "curl -s 'wttr.in/Phnom_Penh?format=%t&m'")
+(defpoll WEATHER_CONDITION :interval "30m" "curl -s 'wttr.in/Phnom_Penh?format=%C&m'")
+(defpoll WEATHER_WIND :interval "30m" "curl -s 'wttr.in/Phnom_Penh?format=%w&m'")
+(defpoll WEATHER_HUMIDITY :interval "30m" "curl -s 'wttr.in/Phnom_Penh?format=%h&m'")
+(defpoll WEATHER_PRECIP :interval "30m" "curl -s 'wttr.in/Phnom_Penh?format=%p&m'")

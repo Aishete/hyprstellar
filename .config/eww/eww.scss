@@ -1,0 +1,114 @@
+
+@import "../../../.cache/wal/colors.scss";
+
+* {
+  all: unset;
+  font-family: Typestar OCR;
+}
+
+window {
+  background: transparent;
+}
+
+.container {
+  background-color: transparentize($background, 0.5);
+  border-width: 1px;
+  /* border-style: solid; */
+  /* border-color: $foreground; */
+  color: $foreground;
+  border-radius: 12px;
+}
+
+.userinfo-parent {
+  background-color: transparentize($background, 0.5);
+  color: $foreground;
+  border-radius: 12px;
+  border-width: 1px;
+  /* border-style: solid; */
+  /* border-color: $foreground; */
+}
+
+/* Rest of your existing styles remain the same */
+
+
+.userinfo-child {
+  color: $foreground;
+}
+
+.label {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.button-label {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.completelytrans {
+  background: none;
+}
+
+.button {
+  border-radius: 6px;
+  margin: 10px;
+}
+.button:hover {
+  background-color: $color13;
+  color: $background;
+  transition-duration: 150ms;
+}
+.button:active {
+  background-color: darken($color13, 100%);
+  color: $background;
+  transition-duration: 150ms;
+}
+
+.poweroff-button {
+  border-radius: 6px;
+  margin: 10px;
+}
+.poweroff-button:hover {
+  background-color: $color1;
+  color: $background;
+  transition-duration: 150ms;
+}
+.poweroff-button:active {
+  background-color: darken($color1, 10%);
+  color: $background;
+  transition-duration: 150ms;
+}
+
+.suspend-button {
+  border-radius: 6px;
+  margin: 10px;
+}
+.suspend-button:hover {
+  background-color: $color6;
+  color: $background;
+  transition-duration: 150ms;
+}
+.suspend-button:active {
+  background-color: darken($color6, 10%);
+  color: $background;
+  transition-duration: 150ms;
+}
+
+.icon-label {
+  font-size: 45px;
+  font-weight: normal;
+}
+
+/* Add these new styles */
+.weather-icon {
+  font-size: 32px;
+}
+
+.weather-text {
+  font-size: 14px;
+}
+
+.weather-temp {
+  font-size: 18px;
+  font-weight: bold;
+}
