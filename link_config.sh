@@ -48,6 +48,8 @@ SOURCE_DIRS=(
     "$HYPRSTELLAR_DIR/.config/ghostty"
     "$HYPRSTELLAR_DIR/.config/tmux"
     "$HYPRSTELLAR_DIR/.config/qutebrowser"
+    "$HYPRSTELLAR_DIR/.config/eww"
+    "$HYPRSTELLAR_DIR/.config/superfile"
 )
 
 # Create symlinks in ~/.config

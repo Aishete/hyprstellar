@@ -107,7 +107,9 @@ install_aur_packages() {
         "pywal16-git"
 
         # Utilities
-        "swww"
+        "sway"
+	"swww"
+	"eww"
         "swaync-git"
         "hyprlock-git"
         "hypridle-git"
