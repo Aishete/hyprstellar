@@ -50,6 +50,13 @@ SOURCE_DIRS=(
     "$HYPRSTELLAR_DIR/.config/qutebrowser"
     "$HYPRSTELLAR_DIR/.config/eww"
     "$HYPRSTELLAR_DIR/.config/superfile"
+    "$HYPRSTELLAR_DIR/.config/assets"
+    "$HYPRSTELLAR_DIR/.config/cinnamon"
+    "$HYPRSTELLAR_DIR/.config/gtk-2.0"
+    "$HYPRSTELLAR_DIR/.config/gtk-3.0"
+    "$HYPRSTELLAR_DIR/.config/gtk-3.20"
+    "$HYPRSTELLAR_DIR/.config/gtk-4.0"
+
 )
 
 # Create symlinks in ~/.config
