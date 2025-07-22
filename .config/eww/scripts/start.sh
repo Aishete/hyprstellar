@@ -10,3 +10,4 @@ eww open monthbox
 eww open daybox
 eww open userinfo
 eww open weather
+eww open music

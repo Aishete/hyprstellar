@@ -1,0 +1,46 @@
+[language-server.tailwindcss-ls]
+command = "tailwindcss-language-server"
+args = ["--stdio"]
+config = { userLanguages = { rust = "html", "*.rs" = "html" } }
+
+[[language]]
+name = "html"
+language-servers = [ "vscode-html-language-server", "tailwindcss-ls" ]
+
+[[language]]
+name = "css"
+language-servers = [ "vscode-css-language-server", "tailwindcss-ls" ]
+
+[[language]]
+name = "jsx"
+language-servers = [ "typescript-language-server", "tailwindcss-ls", "vscode-eslint-language-server", ]
+
+[[language]]
+name = "tsx"
+language-servers = [ "typescript-language-server", "tailwindcss-ls", "vscode-eslint-language-server" ]
+
+[[language]]
+name = "svelte"
+language-servers = [ "svelteserver", "tailwindcss-ls" ]
+
+[[language]]
+name = "rust"
+language-servers = ["rust-analyzer", "tailwindcss-ls"]
+
+[[language]]
+name = "javascript"
+language-servers = [
+  "typescript-language-server", # optional
+  "vscode-eslint-language-server",
+]
+
+[[language]]
+name = "typescript"
+language-servers = [
+  "typescript-language-server",
+  "vscode-eslint-language-server",
+]
+
+[[language]]
+name = "toml"
+formatter = { command = "taplo", args = ["fmt", "-"] }

@@ -1,5 +1,5 @@
-
 @import "../../../.cache/wal/colors.scss";
+@import "scripts/player/player.scss"
 
 * {
   all: unset;
@@ -53,11 +53,13 @@ window {
   border-radius: 6px;
   margin: 10px;
 }
+
 .button:hover {
   background-color: $color13;
   color: $background;
   transition-duration: 150ms;
 }
+
 .button:active {
   background-color: darken($color13, 100%);
   color: $background;
@@ -68,11 +70,13 @@ window {
   border-radius: 6px;
   margin: 10px;
 }
+
 .poweroff-button:hover {
   background-color: $color1;
   color: $background;
   transition-duration: 150ms;
 }
+
 .poweroff-button:active {
   background-color: darken($color1, 10%);
   color: $background;
@@ -83,11 +87,13 @@ window {
   border-radius: 6px;
   margin: 10px;
 }
+
 .suspend-button:hover {
   background-color: $color6;
   color: $background;
   transition-duration: 150ms;
 }
+
 .suspend-button:active {
   background-color: darken($color6, 10%);
   color: $background;

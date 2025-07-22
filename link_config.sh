@@ -56,7 +56,7 @@ SOURCE_DIRS=(
     "$HYPRSTELLAR_DIR/.config/gtk-3.0"
     "$HYPRSTELLAR_DIR/.config/gtk-3.20"
     "$HYPRSTELLAR_DIR/.config/gtk-4.0"
-
+    "$HYPRSTELLAR_DIR/.config/cava"
 )
 
 # Create symlinks in ~/.config

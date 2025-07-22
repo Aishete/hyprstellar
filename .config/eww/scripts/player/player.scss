@@ -1,0 +1,128 @@
+.player {
+  font-family: "JetBrains Mono Medium", "Material Design Icons Desktop";
+  background-color: $background; /* Changed from $bg */
+  padding: 0.6rem;
+  min-height: 12rem;
+  border-radius: 0.6rem;
+  background-color: $color0; /* Changed from rgba(0, 0, 0, 1) */
+  background:
+    linear-gradient($color0, $color0) padding-box, /* Changed from rgba(0, 0, 0, 1) */
+    linear-gradient(45deg, $color1, $color2) border-box; /* Changed from specific RGBAs */
+  border: 3px solid transparent;
+
+  .player-art {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 0 0.3rem black;
+    border-radius: 1.2rem;
+    /* Removed min-width: 22rem; */
+
+    .player-info {
+      border-radius: 1rem;
+      background: linear-gradient(to right,
+          rgb(#191919, 1), /* Consider replacing with a color variable if you have one close to this dark grey */
+          rgba($color0, 0.5)); /* Changed from rgba(#262626, 0.5) - $color0 is #1d1916 */
+      padding: 0.65rem;
+
+      .player-shuffle,
+      .player-loop {
+        font-size: 1rem;
+        text-shadow: 0 0 0.2rem black;
+      }
+
+      .spotify-icon {
+        font-size: 1.25rem;
+        color: $color2; /* Changed from $green (using $color2 as a warm tone for green) */
+        text-shadow: 0 0 0.2rem black;
+      }
+
+      .mpd-icon {
+        font-size: 1.25rem;
+        color: $color5; /* Changed from $magenta (using $color5 as a cool tone for magenta) */
+        text-shadow: 0 0 0.2rem black;
+      }
+
+      .player-title {
+        font-style: italic;
+        font-family: Cartograph CF;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: $foreground; /* Changed from $fg */
+        text-shadow: 0 0 0.5rem rgba($background, 0.5); /* Changed from rgba($color: $bg-alt, $alpha: 0.5) */
+      }
+
+      .player-artist {
+        font-family: JetBrainsMono NF;
+        font-weight: bolder;
+        font-size: 0.8rem;
+        color: $foreground; /* Changed from $fg */
+        text-shadow: 0 0 0.5rem rgba($background, 0.5); /* Changed from rgba($color: $bg-alt, $alpha: 0.5) */
+      }
+
+      .player-time {
+        font-style: italic;
+        font-family: Cartograph CF;
+        font-size: 0.8rem;
+        color: $foreground; /* Changed from $fg */
+        text-shadow: 0 0 0.5rem rgba($background, 0.5); /* Changed from rgba($color: $bg-alt, $alpha: 0.5) */
+      }
+
+      .player-bar scale trough highlight {
+        all: unset;
+        background-image: linear-gradient(to right,
+            darken($color: $color2, $amount: 15%), /* Changed from $green */
+            $color2 ); /* Changed from $green */
+        border-radius: 2rem;
+      }
+
+      .player-bar scale trough {
+        all: unset;
+        background-color: rgba($foreground, 0.3); /* Changed from rgba($fg, 0.3) */
+        box-shadow: 0px 0px 2px 1px rgba(black, 0.5);
+        border-radius: 1rem;
+        min-height: 0.35rem;
+        margin: 0rem 0.2rem 0.2rem 0rem;
+      }
+
+      .player-position {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: $foreground; /* Changed from $fg */
+      }
+    }
+  }
+
+.min {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 1.1rem;
+  padding: 0 0.9rem;
+  color: $color1; /* Changed from $red (using $color1 as a reddish-brown tone) */
+}
+
+.min:hover {
+  color: $color5; /* Changed from $magenta */
+}
+
+  .player-controls {
+    padding: 0rem 0.7rem 0rem 1rem;
+    border-radius: 1rem;
+
+    .player-toggle {
+      font-size: 1.6rem;
+      color: $foreground; /* Changed from $fg */
+    }
+
+    .player-previous,
+    .player-next {
+      font-size: 1.6rem;
+      color: $foreground; /* Changed from $fg */
+    }
+
+    button {
+      &:hover {
+        color: $color5; /* Changed from $magenta */
+      }
+    }
+  }
+}

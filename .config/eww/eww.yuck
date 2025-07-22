@@ -1,7 +1,9 @@
 (include "eww_widgets.yuck")
 
+(include "scripts/player/player.yuck")
+
 (defwindow yearbox
-  :monitor '[1]'
+  :monitor '[0]'
   :stacking "bg"
   :namespace "eww"
   :geometry (geometry
@@ -14,7 +16,7 @@
 )
 
 (defwindow monthbox
-  :monitor '[1]'
+  :monitor '[0]'
   :stacking "bg"
   :namespace "eww"
   :geometry (geometry
@@ -27,7 +29,7 @@
 )
 
 (defwindow daybox
-  :monitor '[1]'
+  :monitor '[0]'
   :stacking "bg"
   :namespace "eww"
   :geometry (geometry
@@ -40,7 +42,7 @@
 )
 
 (defwindow userinfo
-  :monitor '[1]'
+  :monitor '[0]'
   :stacking "bg"
   :namespace "eww"
   :geometry (geometry
@@ -53,7 +55,7 @@
 )
 
 (defwindow powermenu
-  :monitor '[1]'
+  :monitor '[0]'
   :stacking "bg"
   :namespace "eww"
   :geometry (geometry
@@ -66,7 +68,7 @@
 )
 
 (defwindow weather
-  :monitor '[1]'
+  :monitor '[0]'
   :stacking "bg"
   :namespace "eww"
   :geometry (geometry

@@ -1,0 +1,112 @@
+
+[editor]
+mouse = true
+auto-save = true
+rulers = [80, 120]
+cursorline = true
+cursorcolumn = true
+bufferline = "always"
+line-number = "relative"
+scroll-lines = 1
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+# https://docs.helix-editor.com/master/configuration.html#editorsoft-wrap-section
+[editor.soft-wrap]
+enable = true
+# wrap-at-text-width = true
+wrap-indicator = "↩ "
+
+### https://docs.helix-editor.com/master/configuration.html#editorwhitespace-section
+[editor.whitespace.render]
+space = "all"
+tab = "all"
+newline = "none"
+
+[editor.whitespace.characters]
+space = " "
+nbsp = "⍽"    # Non Breaking SPace
+tab = "→"
+newline = "⏎"
+tabpad = "·"  # Tabs will look like "→···" (depending on tab width)
+### 
+
+[editor.statusline]
+left = [ "mode", "spinner", "diagnostics" ]
+center = [ "file-name", "separator", "version-control", "separator" ]
+right = [ "position", "position-percentage", "total-line-numbers" ]
+separator = "│"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.lsp]
+display-inlay-hints = true
+
+
+[editor.indent-guides]
+render = true
+character = "╎" # Some characters that work well: "▏", "┆", "┊", "⸽"
+skip-levels = 1
+
+[editor.file-picker]
+hidden = false
+
+
+[keys.normal]
+# https://www.root.cz/clanky/textovy-editor-helix-ve-funkci-vyvojoveho-prostredi-2-cast/#k11
+ins = "insert_mode"
+esc = ["collapse_selection", "keep_primary_selection"]
+C-o = ":open ~/.config/helix/config.toml" # Maps Ctrl-o to opening of the helix config file
+C-r = ":config-reload"
+# C-tab = ":buffer-previous"
+# C-S-tab = ":buffer-next"
+# A-w = ":buffer-close"
+
+# https://github.com/helix-editor/helix/discussions/7898
+space.c = "toggle_comments"
+
+# https://elixirforum.com/t/helix-editor-for-elixir-development/54964/27
+g = { a = "code_action" } # ga to open code actions
+X = "extend_line_above" # Shift+x to select the whole line above
+D = [ "extend_to_line_end", "change_selection"] # Wipe and edit the current line from cursor position
+# c = ["trim_selections", "change_selection"] # Make 'c' automatically strip the selection of extra whitespace
+# a = ["append_mode", "collapse_selection"] # Remove the selection when entering insert mode with 'a'
+"tab" = "goto_next_function" # Select and jump to the next function via Treesitter
+"S-tab" = "goto_prev_function" # Select and jump to the previous function via Treesitter 
+
+# Use system clipboard
+p = "paste_clipboard_before"
+y = "yank_main_selection_to_clipboard"
+
+# https://github.com/helix-editor/helix/discussions/7908
+space.x = ":toggle whitespace.render all none"
+
+# Mark line and move with them up/down
+# https://github.com/helix-editor/helix/discussions/5764#discussioncomment-4840408
+C-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+C-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+
+# Duplicate lines up/down
+# https://github.com/helix-editor/helix/issues/3680#issuecomment-1399443274
+# Also in [keys.insert]
+S-A-down = ["normal_mode", "extend_to_line_bounds", "yank", "open_below", "replace_with_yanked", "collapse_selection"]
+S-A-up = ["normal_mode", "extend_to_line_bounds", "yank", "open_above", "replace_with_yanked", "collapse_selection"]
+
+S-space = ["half_page_up"]
+
+space."." = "file_picker_in_current_buffer_directory"
+
+# [keys.normal.space]
+# "." = "file_picker_in_current_buffer_directory"
+
+[keys.insert]
+ins = "normal_mode"
+
+# Duplicate lines up/down
+# https://github.com/helix-editor/helix/issues/3680#issuecomment-1399443274
+S-A-down = ["normal_mode", "extend_to_line_bounds", "yank", "open_below", "replace_with_yanked", "collapse_selection"]
+S-A-up = ["normal_mode", "extend_to_line_bounds", "yank", "open_above", "replace_with_yanked", "collapse_selection"]
