@@ -2,18 +2,16 @@
   "$schema": "/etc/xdg/swaync/configSchema.json",
   "positionX": "right",
   "positionY": "top",
-  "cssPriority": "application",
-  "layer": "overlay",
+  "cssPriority": "usr",
+  "layer": "top",
   "layer-shell": true,
-
-  "control-center-layer": "top",
-  "control-center-width": 330,
-  "control-center-height": 725, 
-  "control-center-margin-top": 2,
-  "control-center-margin-bottom": 2,
-  "control-center-margin-right": 1,
-  "control-center-margin-left": 0,
-
+  "control-center-layer": "overlay",
+  "control-center-width": 300,
+  "control-center-height": 600,
+  "control-center-margin-top": 10,
+  "control-center-margin-bottom": 10,
+  "control-center-margin-right": 10,
+  "control-center-margin-left": 10,
   "notification-window-width": 400,
   "notification-window-height": 200,
   "notification-icon-size": 50,
@@ -21,12 +19,11 @@
   "notification-body-image-width": 200,
   "notification-2fa-action": true,
   "notifications-inline-replies": true,
-
   "timeout": 4,
   "timeout-low": 4,
   "timeout-critical": 4,
-  
   "fit-to-screen": false,
+  "control-center-fit-to-screen": false,
   "relative-timestamps": true,
   "keyboard-shortcuts": true,
   "image-visibility": "when-available",
@@ -40,22 +37,19 @@
     "dnd",
     "notifications"
   ],
-
   "widget-config": {
     "title": {
       "text": "NOTIFICATIONS",
       "clear-all-button": true,
       "button-text": "󰩺  CLEAR"
     },
-
     "dnd": {
       "text": "FUCK OFF"
     },
-
     "mpris": {
       "image-size": 76,
       "image-radius": 10
-    }
-
+    },
+    "notifications": {}
   }
 }
