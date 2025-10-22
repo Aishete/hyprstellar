@@ -46,6 +46,20 @@ setup_directory_structure() {
     fi
 }
 
+setupMirrorlist() {
+    local pkgs=(
+        "reflector"
+	"rsync"
+	"curl"
+    )
+    print_status "Installing packages for Genreate Mirror list from official repositories..." "$YELLOW"
+    sudo pacman -S --needed "${pkgs[@]}"
+
+    
+    print_status "Genreate Mirror list get latest 20 sorted by download rate..." "$YELLOW"
+    sudo reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+}
+
 # Function to install official repository packages
 install_official_packages() {
     local pkgs=(
@@ -67,6 +81,7 @@ install_official_packages() {
         "rofi"
         "neovim"
         "lf"
+	"bat"
         "lsd"
         "zoxide"
         "fastfetch"
@@ -110,9 +125,9 @@ install_aur_packages() {
         "sway"
 	"swww"
 	"eww"
-        "swaync-git"
-        "hyprlock-git"
-        "hypridle-git"
+        "swaync"
+        "hyprlock"
+        "hypridle"
         "wifimenu"
         "bluetui"
         "hyprshade"
@@ -134,10 +149,10 @@ install_aur_packages() {
 setup_zsh() {
     print_status "Setting up ZSH..." "$YELLOW"
 
-    # Install Oh My Zsh
-    if [ ! -d "$HOME/.oh-my-zsh" ]; then
-        sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-    fi
+    # # Install Oh My Zsh
+    # if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    #     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    # fi
 
     # Configure Starship
     if [ ! -f "$HOME/.config/starship.toml" ]; then
@@ -177,6 +192,7 @@ main() {
     print_status "Starting Hyprstellar installation..." "$GREEN"
 
     setup_directory_structure
+    setupMirrorlist
     install_official_packages
     install_aur_packages
     setup_zsh

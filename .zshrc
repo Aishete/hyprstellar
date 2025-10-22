@@ -49,7 +49,7 @@ alias ls="lsd"
 alias lsa="lsd -A"
 alias v="nvim"
 alias zshconf="$EDITOR ~/.zshrc && source ~/.zshrc"
-
+alias cat="bat"
 
 # Script
 
