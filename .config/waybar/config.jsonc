@@ -10,9 +10,9 @@
     "~/.config/waybar/modules.jsonc"
   ],
   "modules-left": [
-    "clock",
-    "custom/lang",
-    "power-profiles-daemon"
+    "power-profiles-daemon",
+    "clock"
+    // "custom/lang",
   ],
   "modules-center": [
     "hyprland/workspaces"

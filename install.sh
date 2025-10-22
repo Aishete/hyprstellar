@@ -82,6 +82,7 @@ install_official_packages() {
         "neovim"
         "lf"
 	"bat"
+    "power-profiles-daemon"
         "lsd"
         "zoxide"
         "fastfetch"

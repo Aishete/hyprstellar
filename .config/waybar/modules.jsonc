@@ -76,7 +76,8 @@
           "󰋑 󰋑 󰋑 󱢠 ",
           "󰋑 󰋑 󰋑 󰛞 ",
           "󰋑 󰋑 󰋑 󰋑 "
-        ]
+        ],
+        "interval": 30
     },
     "network": {
         "format-wifi": "    {signalStrength}%",
