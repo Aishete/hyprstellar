@@ -151,8 +151,8 @@ update_blur() {
 
 switch_en_font() {
     local current_font=$(grep "^font_family" "$KITTY_CONF" | awk '{$1=""; print $0}' | xargs)
-    local font_list=("Typestar OCR" "KirschPropo Nerd Font Mono")
-    local font_size_list=('12' '18')
+    local font_list=("Typestar OCR" "DepartureMono Nerd Font")
+    local font_size_list=('12' '15')
     local index=0
     local length_list=${#font_list[@]}
 
