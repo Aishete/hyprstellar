@@ -1,19 +1,20 @@
 local map = vim.keymap.set
 
-map("n", ";", ":", { desc = "CMD enter command mode" })
+map("n", "<leader>;", function()
+    local char = vim.fn.getcharstr()
+    return '<cmd>' .. char .. '<CR>'
+end, { expr = true, desc = "1 char CMD" })
 map({ "o", "x" }, "iq", 'i"', { desc = 'inner ""' })
-map({ "o", "x" }, "aq", 'a"', { desc = '"" block' })
 
-map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move lines down" })
-map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move lines up" })
 map({ "n", "v" }, "x", '"_x', { noremap = true, silent = true })
 map({ "n", "v" }, "X", '"_X', { noremap = true, silent = true })
 map({ "n", "v", "x" }, "<leader>p", '"0p', { desc = "Paste last yank" })
+map('n', '<leader>m', 'm', { desc = "Set mark" })
 
-map("n", "[q", "<cmd>cprev<CR>", { desc = "Jump prev of quick fix list", silent = true })
-map("n", "]q", "<cmd>cnext<CR>", { desc = "Jump next of quick fix list", silent = true })
-map("n", "[l", "<cmd>lprev<CR>", { desc = "Jump prev of location list", silent = true })
-map("n", "]l", "<cmd>lnext<CR>", { desc = "Jump next of location list", silent = true })
+map("n", "<leader>k", "<cmd>cprev<CR><cmd>cclose<CR>", { desc = "Jump prev of quick fix list", silent = true })
+map("n", "<leader>j", "<cmd>cnext<CR><cmd>cclose<CR>", { desc = "Jump next of quick fix list", silent = true })
+map("n", "<leader>K", "<cmd>lprev<CR><cmd>lclose<CR>", { desc = "Jump prev of location list", silent = true })
+map("n", "<leader>J", "<cmd>lnext<CR><cmd>lclose<CR>", { desc = "Jump next of location list", silent = true })
 
 map("n", "<leader>q", function()
     vim.api.nvim_win_close(vim.fn.win_getid(vim.fn.winnr('#')), false)
@@ -53,13 +54,6 @@ end
 -- Save and format file with Ctrl-s
 map({ 'i', 'v', 'n' }, "<C-s>", "<Esc><cmd>lua vim.lsp.buf.format()<CR><cmd>w<CR>",
     { noremap = true, silent = true, desc = "Format then save the file then <Esc>" })
--- oil.vim
-vim.keymap.set('n', "<BS>", function()
-    require("oil").open()
-end, { desc = "Open parent directory" })
-vim.keymap.set('n', "<leader>o", function()
-    require("oil").open_float()
-end, { desc = "Open parent directory in floating window" })
 -- Debugger mappings
 -- -- Moved to plugins/init for lazy loading
 -- Reply to Shreyas
@@ -99,7 +93,7 @@ map('n', "<leader>n", function()
     vim.opt_local.relativenumber = true
 end, { desc = "Use relative number" })
 -- go to  beginning and end
-map('i', "<C-b>", "<ESC>^i", { desc = "Beginning of line" })
+map('i', "<C-i>", "<ESC>^i", { desc = "Beginning of line" })
 map('i', "<C-e>", "<End>", { desc = "End of line" })
 
 -- navigate within insert mode
@@ -107,6 +101,7 @@ map('i', "<C-h>", "<Left>", { desc = "Move left" })
 map('i', "<C-l>", "<Right>", { desc = "Move right" })
 map('i', "<C-j>", "<Down>", { desc = "Move down" })
 map('i', "<C-k>", "<Up>", { desc = "Move up" })
+map('i', "<C-b>", "<ESC>bi", { desc = "Move up" })
 
 map("n", "<Esc>", "<cmd> noh <CR>", { desc = "Clear highlights" })
 -- switch between windows
@@ -115,8 +110,8 @@ map("n", "<C-l>", "<C-w>l", { desc = "Window right" })
 map("n", "<C-j>", "<C-w>j", { desc = "Window down" })
 map("n", "<C-k>", "<C-w>k", { desc = "Window up" })
 
--- Copy all
-map("n", "<C-c>", "<cmd> %y+ <CR>", { desc = "Copy whole file" })
+-- select all
+map("n", "<C-c>", "<ESC>ggVG", { desc = "Select whole file" })
 
 -- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
 -- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
@@ -168,7 +163,7 @@ map("n", "<S-tab>",
     { desc = "Goto prev buffer" })
 
 -- close buffer + hide terminal buffer
-map("n", "Q",
+map("n", "<M-x>",
     function()
         require("nvchad.tabufline").close_buffer()
     end,
@@ -186,19 +181,9 @@ map("v", "<leader>/",
     { desc = "Toggle comment" }
 )
 
-map("n", "K",
-    function()
-        vim.lsp.buf.hover()
-    end,
-    { desc = "LSP hover" }
-)
-
-map("n", "gr",
-    function()
-        vim.lsp.buf.references()
-    end,
-    { desc = "LSP references" })
-
+map('n', 'K', function()
+    vim.lsp.buf.hover({ border = 'rounded' })
+end, { desc = 'LSP documentation' })
 
 map("n", "<leader>lf",
     function()
@@ -207,7 +192,7 @@ map("n", "<leader>lf",
     { desc = "Floating diagnostic" })
 
 map("n", "<leader>sh", function()
-    vim.lsp.buf.signature_help()
+    vim.lsp.buf.signature_help({ border = "rounded" })
 end, { desc = "Signature help" })
 
 map("n", "[d",
@@ -248,17 +233,6 @@ map("n", "<leader>wl",
     end,
     { desc = "List workspace folders" })
 
-map("v", "<leader>ca",
-    function()
-        vim.lsp.buf.code_action()
-    end,
-    { desc = "LSP code action" })
-map("n", "<leader>ca",
-    function()
-        vim.lsp.buf.code_action()
-    end,
-    { desc = "LSP code action" })
-
 -- toggle
 map("n", "<A-f>", "<cmd> NvimTreeToggle <CR>", { desc = "Toggle nvimtree" })
 -- focus
@@ -273,7 +247,7 @@ map("n", "<leader>fo", "<cmd> Telescope oldfiles <CR>", { desc = "Find oldfiles"
 map("n", "<leader>fz", "<cmd> Telescope current_buffer_fuzzy_find <CR>", { desc = "Find in current buffer" })
 
 -- git
-map("n", "<leader>cm", "<cmd> Telescope git_commits <CR>", { desc = "Git commits" })
+map("n", "<leader>gc", "<cmd> Telescope git_commits <CR>", { desc = "Git commits" })
 map("n", "<leader>gt", "<cmd> Telescope git_status <CR>", { desc = "Git status" })
 
 -- pick a hidden term
@@ -282,7 +256,7 @@ map("n", "<leader>ft", "<cmd> Telescope terms <CR>", { desc = "Pick hidden term"
 -- theme switcher
 map("n", "<leader>th", "<cmd> Telescope themes <CR>", { desc = "Nvchad themes" })
 
-map("n", "<leader>ma", "<cmd> Telescope marks <CR>", { desc = "telescope bookmarks" })
+map("n", "<leader>fb", "<cmd> Telescope marks <CR>", { desc = "telescope bookmarks" })
 -- toggle in terminal mode
 map({ "n", "t" }, "<A-v>", function()
     require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
@@ -357,6 +331,12 @@ map("n", "<leader>gh",
     end,
     { desc = "Preview hunk" })
 
+map("n", "<leader>gs",
+    function()
+        require("gitsigns").stage_hunk()
+    end,
+    { desc = "Stage hunk" })
+
 map("n", "<leader>gb",
     function()
         package.loaded.gitsigns.blame_line()
@@ -368,21 +348,3 @@ map("n", "<leader>td",
         require("gitsigns").toggle_deleted()
     end,
     { desc = "Toggle deleted" })
-
--- Nvim DAP
-map("n", "<Leader>dl", "<cmd>lua require'dap'.step_into()<CR>", { desc = "Debugger step into" })
-map("n", "<Leader>dj", "<cmd>lua require'dap'.step_over()<CR>", { desc = "Debugger step over" })
-map("n", "<Leader>dk", "<cmd>lua require'dap'.step_out()<CR>", { desc = "Debugger step out" })
-map("n", "<Leader>dc", "<cmd>lua require'dap'.continue()<CR>", { desc = "Debugger continue" })
-map("n", "<Leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", { desc = "Debugger toggle breakpoint" })
-map(
-	"n",
-	"<Leader>dd",
-	"<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
-	{ desc = "Debugger set conditional breakpoint" }
-)
-map("n", "<Leader>de", "<cmd>lua require'dap'.terminate()<CR>", { desc = "Debugger reset" })
-map("n", "<Leader>dr", "<cmd>lua require'dap'.run_last()<CR>", { desc = "Debugger run last" })
-
--- rustaceanvim
-map("n", "<Leader>dt", "<cmd>lua vim.cmd('RustLsp testables')<CR>", { desc = "Debugger testables" })

@@ -12,7 +12,7 @@ o.tabstop = 4
 o.softtabstop = 4
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-vim.opt.foldenable = false
+vim.g.mkdp_auto_close = 0
 
 vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = "#00ff00", bg = "NONE" })
 vim.api.nvim_set_hl(0, "GitSignsChange", { fg = "#ffaa00", bg = "NONE" })
@@ -34,5 +34,6 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.bo.expandtab = true
         vim.bo.softtabstop = 2
     end,
-    group = vim.api.nvim_create_augroup("IndentationOfJson", { clear = true })
+    group = vim.api.nvim_create_augroup("2-space-indentation", { clear = true })
 })
+vim.cmd [[ highlight Folded gui=italic ]]
