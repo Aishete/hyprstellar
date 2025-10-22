@@ -1,6 +1,6 @@
 #!/bin/bash
 
-image_dir="$HOME/wallpaper/wallpapercollections/01/"
+image_dir="$HOME/wallpaper/"
 images=("$image_dir"/*)
 
 image_list=""
