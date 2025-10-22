@@ -1,2 +1,3 @@
 ./.config/qutebrowser/bookmarks/
+./.config/qutebrowser/__pycache__/
 ./.config/nvim/lazy-lock.json
