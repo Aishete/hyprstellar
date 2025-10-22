@@ -57,11 +57,16 @@ SOURCE_DIRS=(
     "$HYPRSTELLAR_DIR/.config/gtk-3.20"
     "$HYPRSTELLAR_DIR/.config/gtk-4.0"
     "$HYPRSTELLAR_DIR/.config/cava"
+    "$HYPRSTELLAR_DIR/.config/starship.toml"
 )
 
 # Create symlinks in ~/.config
 for dir in "${SOURCE_DIRS[@]}"; do
     if [ -d "$dir" ]; then
+        base_name=$(basename "$dir")
+        ln -sfn "$dir" "$HOME/.config/$base_name"
+        print_status "Linked $dir to $HOME/.config/$base_name" "$GREEN"
+    elif [[ -f "$dir" ]]; then
         base_name=$(basename "$dir")
         ln -sfn "$dir" "$HOME/.config/$base_name"
         print_status "Linked $dir to $HOME/.config/$base_name" "$GREEN"
