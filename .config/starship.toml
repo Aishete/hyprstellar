@@ -1,12 +1,38 @@
-
 add_newline = true
+
+# format = """
+# $time\
+# $username\
+# $directory\
+# $character"""
 format = """
-$directory\
-$character"""
+[┌─](bold green) $battery$time$username$directory
+[└─>](bold green) """
 right_format = """$git_branch $git_status $git_state $cmd_duration"""
 
+[battery]
+full_symbol = '󰁹 '
+charging_symbol = '󰂄 '
+discharging_symbol = '󰂂'
+
+[[battery.display]]
+threshold = 10
+
+[time]
+disabled = false
+format = '[\[🕙$time\]]($style) '
+time_format = '%-I:%M%p'  # Matches zsh's %_I:%M%P (e.g., 3:45pm)
+
+# Username module
+[username]
+disabled = false
+show_always = true
+format = '[$user]($style) in '
+
+# Directory module
 [directory]
-truncation_length = 2
+disabled = false
+format = '[\[$path\]]($style) '
 
 [hostname]
 ssh_symbol = " "
