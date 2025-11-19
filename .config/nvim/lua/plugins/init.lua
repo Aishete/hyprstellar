@@ -203,5 +203,60 @@ return {
         "mg979/vim-visual-multi",
         branch = "master",
         event = 'VeryLazy'
+    },
+    {
+        "epwalsh/obsidian.nvim",
+        version = "*", -- recommended, use latest release instead of latest commit
+        lazy = false,
+        ft = "markdown",
+        -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+        -- event = {
+        --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+        --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
+        --   -- refer to `:h file-pattern` for more examples
+        --   "BufReadPre path/to/my-vault/*.md",
+        --   "BufNewFile path/to/my-vault/*.md",
+        -- },
+        dependencies = {
+            -- Required.
+            "nvim-lua/plenary.nvim",
+
+            -- see below for full list of optional dependencies 👇
+        },
+        opts = {
+            workspaces = {
+                {
+                    name = "work",
+                    path = "~/Documents/obsidian/",
+                },
+            },
+
+            -- see below for full list of options 👇
+        },
+    },
+    {
+        'nvim-orgmode/orgmode',
+        event = 'VeryLazy',
+        ft = { 'org' },
+        config = function()
+            -- Setup orgmode
+            require('orgmode').setup({
+                org_agenda_files = '~/Documents/obsidian/**/*',
+                org_default_notes_file = '~/Documents/obsidian/orgfiles/refile.org',
+                org_capture_templates = {
+                    r = {
+                        description = "Repo",
+                        template = "* [[%x][%(return string.match('%x', '([^/]+)$'))]]%?",
+                        target = "~/Documents/obsidian/orgfiles/repos.org",
+                    }
+                }
+            })
+
+            -- add ~org~ to ignore_install
+            --require('nvim-treesitter.configs').setup({
+            --ensure_installed = 'all',
+            -- ignore_install = { 'org' },
+            --:})
+        end,
     }
 }
