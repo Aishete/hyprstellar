@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+########################################
+# clipboard history with text+image support: fzf+ueberzugpp wrapper, xclip.
+
+# this is beyond impractical and has many bugs.
+# it's an exercise in whether this was
+# possible to achieve with the given tools.
+
+# text clips are created as empty files
+# with the clip as the FILENAME 
+# (yes, I know: see next paragraph)
+# thus, there are placeholders swapped in 
+# for characters like ":" in text clips.
+
+# in theory, saving text clips IN files
+# would be possible with:
+# - search through files (ie. fzf+ripgrep)
+# - non-image previews integrated to fzfub
+
+# st is hardcoded but could be swapped
+# just update parameters accordingly
+# my version of fzfub is in this repo
+# with bindings for copy, delete, etc.
+
+# this doubles as a select-to-clipboard menu
+# for any folder given, which can then be
+# bound as a shortcut: `cliphist sel ~/folder`
+
+# bind `cliphist add` and `cliphist sel` to shortcuts
+# to copy text, press your shortcut key for add,
+# to copy images, first copy normally, then run your shortcut key
+# if you're using dwm or similar, you may need to ensure that the
+# window class `fzfmenu` or title `fzf` has floating property
+########################################
+
+
+HIST=~/.cache/hist
+
+output() { # copy directly from command output
+		CLIP=$(xclip -i -f -selection clipboard 2>/dev/null)
+}
+
+write() { # write current clip into directory, txt or img
+		[[ -z $2 ]] && FOLDER=$HIST || FOLDER=$2
+
+		[ -e "$HIST" ] || notify-send "Creating directory $HIST..."; mkdir -p $HIST
+		ISIMG=$(xclip -selection clipboard -o -t TARGETS | grep png)
+
+		if [[ -n $ISIMG ]]; then
+		   	xclip -selection clipboard -t image/png -o > $HIST/$(date '+%a_%b%d%Y_%H%M%S').png
+			notify-send -i "$HIST/$(date '+%a_%b%d%Y_%H%M%S').png" " clipped img"
+		else
+				CLIP=$(xclip -o -selection primary | xclip -i -f -selection clipboard 2>/dev/null)
+				MULTILINE=$(echo "$CLIP" | sed -e 's/\ /'"SPACEPL"'/g' -e 's/\//'"SLASHPL"'/g' -e 's/\:/'"COLONPL"'/g' -e ':a;N;$!ba;s/\n/'"NEWLINEPL"'/g')
+				touch "$HIST/$MULTILINE"
+				notify-send " $MULTILINE"
+		fi
+}
+
+link() {
+		wget -q "$2" -P $HIST && notify-send " img saved"
+}
+
+
+sel() { # select from clip history and re-copy to clipboard
+		[[ -z $2 ]] && FOLDER=$HIST || FOLDER=$2
+		st -f 'Liberation Mono:pixelsize=27' -c fzfmenu -n fzfmenu -T fzf -g "105x12-100+270" -e fzfub $FOLDER c --tac
+}
+
+copy() { # my fzfub script has ctrl-c and enter bound to copy
+		SELECTION=$2
+		if [[ -n $(file -b --mime-type "$SELECTION" | grep png) ]]; then 
+				xclip -i -selection clipboard -t image/png "$SELECTION" && notify-send -i $SELECTION "reclipped img "
+		else 
+				notify-send  $(basename $SELECTION)
+				basename $SELECTION | sed -e "s/SPACEPL/\ /g" -e "s/SLASHPL/\//g" -e "s/COLONPL/:/g" -e "s/NEWLINEPL/\n/g" | xclip -i -selection clipboard
+		fi
+}
+
+case "$1" in
+		add*) write "$@" ;;
+		out*) output && write "$@" ;;
+		link*) link "$@" ;;
+		sel*) sel "$@" ;;
+		copy*) copy "$@" ;;
+		*) printf "$0 | File: $HIST\n\nadd - copies primary selection to clipboard, and adds to history directory\nout - pipe commands to copy output to clipboard, and add to history directory\nsel - fzfub through history dir\ncopy - recopy, bound in fzfub\n" ; exit 0 ;;
+esac

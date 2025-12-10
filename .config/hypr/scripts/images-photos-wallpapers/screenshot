@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -euo pipefail
+export DISPLAY="${DISPLAY:-:0}"
+
+# Dependencies check
+for cmd in xclip import notify-send; do command -v "$cmd" &>/dev/null || { echo "Missing: $cmd" >&2; exit 1; }; done
+
+OUTDIR="${2:-$HOME/Screenshots}"; mkdir -p "$OUTDIR"
+FILE="$OUTDIR/$(date +%Y%m%d_%H%M%S).png"
+TMP=$(mktemp --suffix=.png); trap 'rm -f "$TMP"' EXIT
+
+show_help(){ 
+    cat <<EOF
+Usage: $0 [color|full|window] [output_dir]
+Environment options:
+  WATERMARK=1
+  WATERMARK_TEXT='text'
+  WATERMARK_POS=position
+  WATERMARK_SIZE=px
+  WATERMARK_BG='#rrggbbaa'
+EOF
+}
+
+post(){ 
+    [[ "${WATERMARK:-}" == "1" ]] && { 
+        command -v magick &>/dev/null || { echo "Missing: magick" >&2; exit 1; }
+        # Watermark subsystem (env overrides supported)
+        magick "$FILE" \
+            -gravity "${WATERMARK_POS:-southeast}" \
+            -pointsize "${WATERMARK_SIZE:-28}" \
+            -fill white -undercolor "${WATERMARK_BG:-#00000080}" \
+            -annotate +20+20 "${WATERMARK_TEXT:-$(date '+%Y-%m-%d %H:%M')}" \
+            "$FILE"
+    }
+    xclip -selection clipboard -t image/png -i "$FILE" && notify-send -i "$FILE" "Screenshot: $(basename "$FILE")"
+    command -v imgcliphist && imgcliphist add
+}
+
+colorpicker(){ 
+    command -v magick &>/dev/null || { notify-send "Missing: magick"; exit 1; }
+    if command -v slop &>/dev/null; then
+        import -window root -crop "$(slop --tolerance=0 || exit 1)" "$TMP"
+    else
+        import "$TMP"
+    fi
+    hex=$(magick "$TMP" -scale 1x1\! -format "#%[hex:p{0,0}]" info: 2>/dev/null || echo "#??????")
+    echo "$hex" | xclip -selection clipboard -i && notify-send -i "$TMP" "Color: $hex"
+}
+
+capture_full(){ 
+    import -window root "$FILE" && post
+}
+
+capture_window(){ 
+    command -v xdotool &>/dev/null || { echo "Missing: xdotool" >&2; exit 1; }
+    import -window "$(xdotool getwindowfocus -f)" "$FILE" && post
+}
+
+capture_selection(){ 
+    import "$FILE" && post
+}
+
+main(){ 
+    case "${1:-}" in
+        -h|--help) show_help ;;
+        color*)    colorpicker ;;
+        full)      capture_full ;;
+        window)    capture_window ;;
+        *)         capture_selection ;;
+    esac
+}
+
+main "$@"

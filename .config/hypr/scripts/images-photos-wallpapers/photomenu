@@ -1,0 +1,182 @@
+#!/usr/bin/env bash
+
+# This is a menu-based script to consolidate and automate my photo processing workflow.
+# TODO better cleanup of dttg
+
+FOLDER=~/pics # global folder with subdirs to be listed
+WATERMARK=~/pics/watermark.png
+NOTIFYCMD=$(which dunstify 2>/dev/null || which notify-send 2>/dev/null) # use dunstify if available, otherwise notify-send
+MENUCMD=$(which wmenu 2>/dev/null || which dmenu 2>/dev/null) # use wmenu if available, otherwise dmenu
+
+fzimgmgk() { # requires fzfub + imgmgk script (in this repo). if you aren't using st, switch shell+parameters
+	st -f 'Liberation Mono:pixelsize=27' -c fzfmenu -n fzfmenu -T fzf -g "105x12-100+270" -e fzfub $FOLDER m || exit 0
+}
+
+transfer() { # pull photos from sd card into a folder for today's date
+mount() { # Check if the card is mounted
+		[ -d /mnt/sdcard/DCIM/ ] || $NOTIFYCMD "Card not mounted."
+}
+
+unmount() { # Unmount card
+		sudo systemd-mount --unmount /mnt/sdcard && $NOTIFYCMD "Card unmounted."
+}
+
+dt() { # Open darktable to import today's photos
+		sudo systemd-mount --unmount /mnt/sdcard && $NOTIFYCMD "Card unmounted; opening Darktable"
+		(darktable "$FOLDER$(date '+%b_%d')") &
+}
+
+postrun() { # Menu to select what I want to do after photos have been transferred
+		$NOTIFYCMD "Photos have transferred."
+		choice=$(printf "Unmount card\\nOpen Darktable, unmount\\nDo nothing" | $MENUCMD -c -l 3 -i -p "Photos have transferred: ")
+		case "$choice" in
+				Unmount*) unmount;;
+				Open*) dt;;
+				Do*) exit 0;;
+		esac
+}
+
+auto() { # Transfer photos from SD card into a directory for today's date
+		[ -d /mnt/sdcard/DCIM/ ] || exit 0
+		$NOTIFYCMD "Photo transfer starting..."
+
+		mkdir -p "$FOLDER$(date '+%b_%d')"
+		find /mnt/sdcard -type f -name "*.CR2" -exec mv -nv {} "$FOLDER$(date '+%b_%d')/" \; && postrun
+}
+
+case "$1" in
+		mount) mount ;;
+		unmount) unmount ;;
+		dt) dt ;;
+		*) auto ;;
+esac
+}
+
+dttg () { # export and open most recent Darktable raw in Gimp as a png.
+# This exports edited raw to png with darktable-cli to preserve edits.
+# Darktable must have no running instances due to its db handling.
+
+# Lua scripts exist to do this as a direct integration in Darktable.
+# That is a cleaner approach which allows Darktable to remain open,
+# so you could edit images sequentially (open in Gimp, re-import, open next in Gimp, etc.)
+# It would be called via shortcut key directly inside Darktable.
+# However, an externally called shortcut/export makes more sense for my own workflow.
+# See: https://docs.darktable.org/lua/stable/lua.scripts.manual/scripts/contrib/gimp/
+
+[[ -z $(pidof darktable) ]] || $(notify-send "Quit Darktable cleanly first!" && exit 0)
+DBLOC="$XDG_CONFIG_HOME/darktable/library.db" # Darktable's library db location
+
+IMGPATH=$(sqlite3 -readonly "$DBLOC" "
+SELECT f.folder || '/' || i.filename
+FROM images AS i
+JOIN film_rolls AS f ON i.film_id = f.id
+WHERE i.id IN (SELECT imgid FROM selected_images)
+LIMIT 1; 
+" || $NOTIFYCMD 'Open Darktable and select an image!' && exit 0) # use -readonly to avoid any risk of db corruption
+
+# TODO: handling of multiple exported pngs
+if [[ -e ${IMGPATH::-4}.png ]]; then
+		$NOTIFYCMD "Opening ${IMGPATH::-4}.png in GIMP."
+		gimp ${IMGPATH::-4}.png
+else
+		$NOTIFYCMD -t 3000 "Exporting ${IMGPATH::-4}.png..." && darktable-cli $IMGPATH ${IMGPATH::-4}.png && notify-send "${IMGPATH::-4}.png exported. Opening GIMP." && gimp ${IMGPATH::-4}.png
+fi
+}
+
+
+openfolder () { # fuzzy find a folder to open in Darktable
+		CHOICE=$(echo -e "TYPE PATH...\n$(command ls -t1 $FOLDER)" | $MENUCMD -c -l 10 -i -p "Folder: ") || exit 0
+				case $CHOICE in
+						*TYPE*) PHOTODIR="$(echo "" | $MENUCMD -c -p "󰄄 Open: " <&-)" || exit 0 ;;
+						*) PHOTODIR=$FOLDER$CHOICE ;;
+				esac
+
+		darktable $PHOTODIR
+}
+
+
+# TODO: check for nsxiv vs another program
+viewfolder () { # quickview a folder in nsxiv
+		CHOICE=$(echo -e "TYPE PATH...\n$(command ls -t1 $FOLDER)" | $MENUCMD -c -l 10 -i -p "Folder: ") || exit 0
+				case $CHOICE in
+						*TYPE*) PHOTODIR="$(echo "" | $MENUCMD -c -p "󰍋 View: " <&-)" || exit 0 ;;
+						*) PHOTODIR=$FOLDER$CHOICE ;;
+				esac
+
+		nsxiv $PHOTODIR
+}
+
+
+rmexif () { # exiftool's binary location may need to be explicitly called. check /usr/bin/vendor_perl 
+		PHOTODIR="$(echo "" | $MENUCMD -c -p "󰉏 " <&-)" || exit 0
+		$NOTIFYCMD "Removing exif data in $PHOTODIR..." && exiftool -all= $PHOTODIR/*{png,jpg,jpeg} && $NOTIFYCMD "Exif data removed on png, jpg, and jpeg in $PHOTODIR!"
+}
+
+
+checkexif () { # quickly check exif counts as a litmus test of whether a folder was stripped
+		CHOICE=$(echo -e "TYPE PATH...\n$(command ls -t1 $FOLDER)" | $MENUCMD -c -l 10 -i -p "󰉏 ") || exit 0
+				case $CHOICE in
+						*TYPE*) PHOTODIR="$(echo "" | $MENUCMD -c -p "󰉏 " <&-)" || exit 0 ;;
+						*) PHOTODIR=$FOLDER$CHOICE ;;
+				esac
+		$NOTIFYCMD -t 5000 "Fetching exif counts..."
+		$NOTIFYCMD -t 10000 "$(for f in $PHOTODIR/*; do echo $(exiftool "$f" | wc -l) $f; done)"
+}
+
+
+convpng() { # copy cr2 to png
+		PHOTODIR="$(echo "" | $MENUCMD -c -p "󰉏 " <&-)" || exit 0
+		$NOTIFYCMD "Copying all cr2 to png in $PHOTODIR/pics..."
+		mkdir -p $PHOTODIR/png && mogrify -path $PHOTODIR/png -format png $PHOTODIR/*.CR2 && $NOTIFYCMD "Copied all cr2 to png in $PHOTODIR/png."
+}
+
+
+convjpg() { # convert png to jpg, overwriting orignal png
+		$NOTIFYCMD -u critical -t 5000 "will modify ORIGINAL images (esc to quit)"
+		PHOTODIR="$(echo "" | $MENUCMD -c -p "󰉏 " <&-)" || exit 0
+		$NOTIFYCMD "Converting all png to jpg in $PHOTODIR..."
+		mogrify -format jpg $PHOTODIR/*.png && $NOTIFYCMD "Converted all png to jpg in $PHOTODIR."
+}
+
+
+downscale() { # copy and downscale filtered images in a dir by chosen %
+		PHOTODIR="$(echo "" | $MENUCMD -c -p "󰉏 " <&-)" || exit 0
+		SIZE="$(echo "" | $MENUCMD -c -p " images over size M? " <&-)" || exit 0
+		SCALE="$(echo "" | $MENUCMD -c -p " scale %: " <&-)" || exit 0
+		$NOTIFYCMD "Downscaling png larger than $SIZE M to $SCALE%, to $PHOTODIR/downscale..."
+		mkdir -p $PHOTODIR/downscale && find $PHOTODIR -type f -iregex '.*\.\(png\|jpe\?g\)' -size +"$SIZE"M -exec mogrify -path $PHOTODIR/downscale -scale "$SCALE"% {} \; && $NOTIFYCMD "All images over $SIZE M downscaled."
+}
+
+
+watermark() { # watermarks to a copied ".watermark" extension, using defined $WATERMARK file
+		PHOTODIR="$(echo "" | $MENUCMD -c -p "󰉏 " <&-)" || exit 0
+		$NOTIFYCMD "Watermarking copies of all png, jpg, jpeg."
+		find $PHOTODIR -type f -iregex '.*\.\(png\|jpe\?g\)' -exec composite -compose multiply -gravity SouthWest -geometry +99+99 $WATERMARK {} {}.watermark \; && $NOTIFYCMD "Watermarked all images in $PHOTODIR."
+}
+
+focusdetect() { # checks whether images in a directory are in focus, and records paths of those which are not into a file. focusdetect.py is in this repo.
+		PHOTODIR="$(echo "" | dmenu -c -p "󰉏 " <&-)" || exit 0
+		python3 focusdetect.py $PHOTODIR || $NOTIFYCMD "focusdetect.py not found, is it in the same dir?"
+}
+
+menu() {
+		CHOICE=$(printf " imgmgk\\n transfer photos\\n dt to gimp\\n󱞊 view folder\\n󰉒 open folder\\n󱔼 remove exif\\n󱕁 check exif\\n󰸭 cr2 to png\\n󰈥 png to jpg\\n󰶡 downscale\\n watermark\\n󱡴 focus detect\\n PLACEHOLDERS\\n󰄄 darktable\\n gimp" | $MENUCMD -c -l 21 -i )
+		case "$CHOICE" in
+				**) fzimgmgk ;;
+				**) transfer ;;
+				**) dttg ;;
+				*󱞊*) viewfolder ;;
+				*󰉒*) openfolder ;;
+				*󱔼*) rmexif ;;
+				*󱕁*) checkexif ;;
+				*󰸭*) convpng ;;
+				*󰈥*) convjpg ;;
+				*󰶡*) downscale ;;
+				**) watermark ;;
+				*󱡴*) focusdetect ;;
+				*󰄄*) darktable ;;
+				**) gimp ;;
+		esac
+}
+
+menu

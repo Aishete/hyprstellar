@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+# Combined with a cron job, this script downloads random photos from picsum. a random file is choosen if no connectivity is found.
+# https://github.com/BreadOnPenguins/scripts/issues/13
+
+SEARCH="${1:-wallpaper desktop}"
+SRC="https://picsum.photos"
+DEST="/home/$USER/Pictures/wallpaper"
+BRIGHTNESS=100
+
+CURRENT_DESKTOP=$(ps -e | grep -E -i -m 1 -o "xfce|dwm")
+
+ERROR=$(curl -s $SRC/200/300?grayscale)
+
+check_connectivity() {
+if [[ -n $ERROR ]]; then
+echo -e "$SRC unavailable.\nWill pick a random image from your Pictures folder"
+#exit
+fi
+if [ "$(nmcli networking connectivity)" != "full" ]; then
+exit
+fi
+}
+
+get_colortemp() {
+read light dark < <(convert $1 -format "%[fx:meanwh] %[fx:(1-mean)wh]" info:)
+light=$(echo "$light" | awk -F"E" 'BEGIN{OFMT="%10.10f"} {print $1 * (10 ^ $2)}')
+dark=$(echo "$dark" | awk -F"E" 'BEGIN{OFMT="%10.10f"} {print $1 * (10 ^ $2)}')
+let brightness=$(echo "100*$light/$dark" | bc)
+#echo $light, $dark, $brightness
+echo $brightness
+}
+
+set_wallpaper() {
+local search="${SEARCH// /+}"
+xfeh=$(xrandr --listactivemonitors | sed '1d' | while read -r line; do
+#xrandr --listactivemonitors | sed '1d' | while read -r line; do
+read -r resolution display < <(awk '{print $3, $4}' <<<"$line")
+resolution=$(sed -e 's//.x/x/' -e 's//.//' <<<"$resolution")
+resolution_bis=$(echo $resolution | sed 's/x///')
+#echo $display $resolution
+link=$SRC/$resolution/?$search
+link=$SRC/${resolution_bis}?grayscale
+link=$SRC/${resolution_bis}
+img=$DEST/xwallpaper-$resolution-$display.jpg
+echo $link $img >/tmp/xrand-wallpaper.log
+if [[ -n $ERROR ]]; then
+img=$(shuf -n 1 -e $DEST/.jpg)
+else
+let brightness=500
+while [ $brightness -gt $BRIGHTNESS ]; do
+wget -q -O "$img" "$link"
+brightness=$(get_colortemp $img)
+sleep 1
+done
+fi
+case "$CURRENT_DESKTOP" in
+xfce)
+for monitor in $(xfconf-query -c xfce4-desktop -p /backdrop -l | grep -E -e "$display.last-image$"); do
+xfconf-query -c xfce4-desktop -p "$monitor" -s "$img"
+done
+;;
+dwm)
+xfeh="$xfeh $img "
+echo "$xfeh"
+;;
+esac
+done | tail -1)
+#done
+if [[ -n "$xfeh" ]]; then
+feh --bg-scale $xfeh
+fi
+}
+
+check_connectivity
+
+set_wallpaper

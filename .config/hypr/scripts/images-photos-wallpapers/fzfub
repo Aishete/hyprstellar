@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# ueberzugpp stuff
+case "$(uname -a)" in
+    *Darwin*) UEBERZUG_TMP_DIR="$TMPDIR" ;;
+    *) UEBERZUG_TMP_DIR="/tmp" ;;
+esac
+
+cleanup() {
+    ueberzugpp cmd -s "$SOCKET" -a exit
+}
+trap cleanup HUP INT QUIT TERM EXIT
+
+UB_PID_FILE="$UEBERZUG_TMP_DIR/.$(uuidgen)"
+ueberzugpp layer --no-stdin --silent --use-escape-codes --pid-file "$UB_PID_FILE"
+UB_PID=$(cat "$UB_PID_FILE")
+
+export SOCKET="$UEBERZUG_TMP_DIR"/ueberzugpp-"$UB_PID".socket
+
+# fzf optional settings:
+# first argument: directory
+# second argument: preset options
+# third argument: any other options
+# example using wallpapermenu opts: 
+# fzfub ~/pics w --tac
+
+case $2 in
+		*w) # wallpapermenu options
+				FZFARGS='ctrl-t:execute-silent(wallpapermenu {} tendency),ctrl-f:execute-silent(wallpapermenu {} flare),ctrl-d:execute-silent(wallpapermenu {} dim),ctrl-g:execute-silent(wallpapermenu {} grove),ctrl-w:execute-silent(wallpapermenu {}),ctrl-e:become(gimp {+} > /dev/null 2>&1)'
+				ILABEL='·.·★⋆⁺₊⋆·.·★⋆⁺₊⋆𝖜𝖆𝖑𝖑𝖕𝖆𝖕𝖊𝖗 𝖒𝖊𝖓𝖚⋆⁺₊⋆★·.·⋆⁺₊⋆★·.·'
+				LABEL='[ᴄᴛʀʟ 𝐰·ᴘʏᴡᴀʟ 𝐝·ᴅɪᴍ 𝐟·ғʟᴀʀᴇ 𝐠·ɢʀᴏᴠᴇ 𝐭·ᴛᴇɴᴅᴇɴᴄʏ]' ;;
+		*m) # ₊⊹ɪᴍɢᴍɢᴋ⊹₊ options
+				FZFARGS='ctrl-r:become(fzfubrefresh {}),ctrl-e:execute-silent(imgmgk stripexif {})+become(fzfubrefresh {}),alt-j:execute-silent(imgmgk jpg {})+become(fzfubrefresh {}),alt-p:execute-silent(imgmgk png {})+become(fzfubrefresh {}),ctrl-d:execute(rm -i {} && notify-send {} deleted)+become(fzfubrefresh {}),ctrl-s:execute-silent(imgmgk scale {+})+become(fzfubrefresh {}),ctrl-b:execute-silent(imgmgk bw {+})+become(fzfubrefresh {}),ctrl-w:execute-silent(imgmgk wm {+})+become(fzfubrefresh {}),ctrl-g:become(gimp {+} > /dev/null 2>&1),ctrl-t:execute-silent(imgmgk transparency {+})+become(fzfubrefresh {}),ctrl-f:execute-silent(imgmgk flip {+})+become(fzfubrefresh {}),ctrl-v:execute-silent(imgmgk vflip {+})+become(fzfubrefresh {}),ctrl-l:execute-silent(imgmgk border {+})+become(fzfubrefresh {}),ctrl-h:execute-silent(imgmgk wborder {+})+become(fzfubrefresh {})'
+				ILABEL="[ᴀʟᴛ: 𝐣·ᴊᴘɢ 𝐩·ᴘɴɢ | ᴄᴛʀʟ: 𝐝·ᴅᴇʟ 𝐞·ᴇxɪғ 𝐛·ʙ&ᴡ 𝐰·ᴡᴛʀᴍᴀʀᴋ"
+				LABEL="𝐠·➡ɢɪᴍᴘ 𝐭·ᴛʀᴀɴsᴘᴀʀᴇɴᴛ 𝐟/𝐯·ғʟɪᴘ 𝐥·ʙʟᴋ 𝐡·ᴡʜᴛᴇ ʙᴏʀᴅʀ]" ;;
+		*c) # cliphist options
+				ILABEL="ᴄʟɪᴘʜɪsᴛ: ᴇɴᴛᴇʀ/ᴄᴛʀʟ-c: ᴄᴏᴘʏ"
+				LABEL="[ᴄᴛʀʟ g: ᴇᴅɪᴛ ɪɴ ɢɪᴍᴘ | d: ᴅᴇʟ | t: ᴛᴏ ᴛʀᴀɴsᴘᴀʀᴇɴᴛ]"
+				FZFARGS='enter:execute(cliphist copy {}),ctrl-c:execute(cliphist copy {}),ctrl-t:execute-silent(imgmgk transparencyrecopy {+}),ctrl-g:become(gimp {+} > /dev/null 2>&1),ctrl-d:execute(rm {} && notify-send {} deleted)' ;;	
+		*) FZFARGS='ctrl-d:execute(rm -i {} && notify-send {} deleted)' ;; # normal options
+esac
+
+# run fzf with preview and given vars
+fzf --walker-root=${1:-$PWD} $3 -m --bind "$FZFARGS" --style ${STYLE:-full} --reverse --preview-border --preview-label "$LABEL" --input-label "$ILABEL" --preview="ueberzugpp cmd -s $SOCKET -i fzfpreview -a add \
+                            -x \$FZF_PREVIEW_LEFT -y \$FZF_PREVIEW_TOP \
+                            --max-width \$FZF_PREVIEW_COLUMNS --max-height \$FZF_PREVIEW_LINES \
+                            -f {} || bat --style=plain--color=always {}"
+
+ueberzugpp cmd -s "$SOCKET" -a exit

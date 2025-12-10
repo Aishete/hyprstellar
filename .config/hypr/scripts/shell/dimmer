@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+[ "$1" = 10 ] && percent="1" || percent="0.$1"
+[ "$2" = night ] && gamma="1.0:0.95:0.85" || gamma="1.0:1.0:1.0"
+
+export DISPLAY=:0
+
+notif() {
+notify-send -t 3000 -h string:bgcolor:#ebcb8b "Brightness adjusted!"
+}
+
+dimm() {
+mon=$(xrandr | grep " connected" | cut -d ' ' -f 1)
+while read m; do
+xrandr --output $m --brightness $percent --gamma $gamma
+done <<<"$mon"
+}
+
+dimm && notif

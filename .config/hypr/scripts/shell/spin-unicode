@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# thanks to: https://github.com/BreadOnPenguins/scripts/discussions/23#discussioncomment-14650943
+
+# Use in scripts like:
+# spin &
+# SPINNER_PID=$!
+# disown
+# # run here any task that would take time in the terminal
+# kill $SPINNER_PID
+# wait $SPINNER_PID 2>/dev/null
+
+spinner_frames=("⠋" "⠙" "⠹" "⠸" "⠼" "⠴" "⠦" "⠧" "⠇" "⠏")
+
+BLUE="\e[34m" # or use any other color, or even no color at all
+RESET="\e[0m"
+
+while true; do
+  for frame in "${spinner_frames[@]}"; do
+    echo -en "\r${BLUE}${frame} ${RESET}" # add a space after the spinner -- as gap
+    sleep 0.1
+  done
+done

@@ -1,0 +1,6 @@
+#! /usr/bin/env bash
+# template for use with xephyr for window manager testing
+
+Xephyr -br -ac -noreset -screen 1600x900 :1 &
+sleep 1
+DISPLAY=:1 sowm

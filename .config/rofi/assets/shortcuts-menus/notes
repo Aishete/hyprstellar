@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+folder="$HOME/notes/"
+: "${TERMINAL:=xterm}"
+
+# Ensure notes directory exists
+if [ ! -d "$folder" ]; then
+  mkdir -p "$folder" || { echo "Error: Cannot create directory $folder"; exit 1; }
+fi
+
+newnote () {
+  dir="$(ls -d "$folder" "$folder"*/ 2>/dev/null | rofi -dmenu -lines 5 -i -p 'Choose directory: ' -theme ~/.cache/wal/colors-rofi-dark.rasi)" || return 1
+  : "${dir:=$folder}"
+  dir="${dir%/}"  # Remove trailing slash
+  name="$(echo "" | rofi -dmenu -p "Enter a name: " -theme ~/.cache/wal/colors-rofi-dark.rasi <&-)" || return 1
+  : "${name:=$(date +%F_%H-%M-%S)}"
+  name="${name%.md}"  # Strip .md if provided
+  if ! setsid -f "$TERMINAL" -e nvim "$dir/$name.md"; then
+    echo "Error: Failed to open terminal or nvim"
+    exit 1
+  fi
+}
+
+selected () {
+  choice=$(echo -e "New\n$(find "$folder" -type f -name "*.md" -printf '%T@ %P\n' | sort -nr | cut -d' ' -f2-)" | rofi -dmenu -lines 5 -i -p "Choose note or create new: " -theme ~/.cache/wal/colors-rofi-dark.rasi)" || exit 0
+  case "$choice" in
+    New) newnote ;;
+    *.md)
+      if ! setsid -f "$TERMINAL" -e nvim "$folder$choice"; then
+        echo "Error: Failed to open terminal or nvim"
+        exit 1
+      fi
+      ;;
+    *) exit 0 ;;
+  esac
+}
+
+selected

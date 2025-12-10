@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+export DISPLAY=:0
+
+# st is hardcoded, but you can
+# switch to another terminal
+# and adjust parameters as needed
+
+# uses my version of fzfub (in this repo)
+# as a wallpaper picker with some extra options
+# first arg is wallpaper selection
+# second arg is optional theme
+# my preset themes are in my dots repo
+
+WPFOLDER=~/pics/wallpaper/ # wallpaper folder (duh)
+PW16SCRIPT=~/scripts/pywal16 # pywal16 post-run script
+TEMPIMG=~/pics/wallpaper/temp # save as a temporary image for restoration on restart and such
+
+case "$#" in
+		0) st -f 'Liberation Mono:pixelsize=27' -c fzfmenu -n fzfmenu -T fzf -g "105x12-100+270" -e fzfub $WPFOLDER w || exit 0 ;;
+		1) wal -i "$1" -o $PW16SCRIPT && ln -sf "$1" $TEMPIMG > /dev/null 2>&1 ;;
+		2) wal -i "$1" --theme "$2" -o $PW16SCRIPT && ln -sf "$1" $TEMPIMG > /dev/null 2>&1 ;;
+		*) exit 0 ;;
+esac

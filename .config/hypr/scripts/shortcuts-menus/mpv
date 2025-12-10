@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+FOLDER=$HOME/
+
+openvid () { \
+  NAME="$(echo "$(command ls $FOLDER)" | dmenu -c -l 15)" || exit 0
+  mpv "$FOLDER$NAME" >/dev/null 2>&1
+}
+
+openvid

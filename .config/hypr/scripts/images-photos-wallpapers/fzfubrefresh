@@ -1,0 +1,5 @@
+# original version, which could refresh into subdirectories..
+# st -f 'Liberation Mono:pixelsize=27' -c fzfmenu -n fzfmenu -T fzf -g "105x12-100+270" -e fzfub $(dirname $1) m || exit 0
+# I'll set a global var PICS instead, as to prevent refreshing into a subdirectory
+# could also manually call the directory of choice, in this refresh command
+ueberzugpp cmd -s "$SOCKET" -a exit && st -f 'Liberation Mono:pixelsize=27' -c fzfmenu -n fzfmenu -T fzf -g "107x12-100+270" -e fzfub $PICS m || exit 0

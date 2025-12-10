@@ -2,7 +2,16 @@ import os
 from urllib.request import urlopen
 
 # load your autoconfig, use this, if the rest of your config is empty!
+import pywalQute.draw
+
 config.load_autoconfig()
+
+pywalQute.draw.color(c, {
+    'spacing': {
+        'vertical': 6,
+        'horizontal': 8
+    }
+})
 
 if not os.path.exists(config.configdir / "theme.py"):
     theme = "https://raw.githubusercontent.com/catppuccin/qutebrowser/main/setup.py"

@@ -46,8 +46,22 @@ inc_volume() {
     pamixer -i 5 && notify_user
 }
 
+inc_volume_by_1() {
+    if [ "$(pamixer --get-mute)" == "true" ]; then
+        pamixer -u && notify_user
+    fi
+    pamixer -i 1 && notify_user
+}
+
 # Decrease Volume
 dec_volume() {
+    if [ "$(pamixer --get-mute)" == "true" ]; then
+        pamixer -u && notify_user
+    fi
+    pamixer -d 5 && notify_user
+}
+
+dec_volume_by_1() {
     if [ "$(pamixer --get-mute)" == "true" ]; then
         pamixer -u && notify_user
     fi
@@ -119,8 +133,12 @@ if [[ "$1" == "--get" ]]; then
 	get_volume
 elif [[ "$1" == "--inc" ]]; then
 	inc_volume
+elif [[ "$1" == "--inc1" ]]; then
+	inc_volume_by_1
 elif [[ "$1" == "--dec" ]]; then
 	dec_volume
+elif [[ "$1" == "--dec1" ]]; then
+	dec_volume_by_1
 elif [[ "$1" == "--toggle" ]]; then
 	toggle_mute
 elif [[ "$1" == "--toggle-mic" ]]; then
